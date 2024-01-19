@@ -92,4 +92,6 @@ for i = 1:numel(X)
 end
 
 labeledData = cell2table(labeledData);
+labeledData = renamevars(labeledData,["labeledData1","labeledData2","labeledData3", "labeledData4", "labeledData5", "labeledData6"],["Case","Task1","Task2","Task3","Task4","Task5"]);
+
 %diagnosticFeatureDesigner(X, labels);
