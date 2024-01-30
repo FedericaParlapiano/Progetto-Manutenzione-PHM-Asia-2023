@@ -1,6 +1,6 @@
-numWindow = 19
+numWindow = 19;
 
-[yfit,scores]=trainedModel.predictFcn(testTable);
+[yfit,scores]=trainedModel2.predictFcn(testTable);
 
 len = length(yfit);
 
@@ -8,7 +8,7 @@ labels = testTable.Task1;
 label_array = [];
 
 for i = 1:numWindow:len-numWindow+1
-    label_array = [label_array,labels(i)];
+    label_array = [label_array, labels(i)];
 end
 
 prediction = [];
