@@ -46,5 +46,6 @@ labeledData = cell2table(labeledData);
 labeledData = renamevars(labeledData,["labeledData1","labeledData2"],["Case","Task2"]);
 toDelete = strcmp(labeledData.Task2, "toDrop");
 labeledData(toDelete,:) = [];
-size(labeledData)
-
+Case = labeledData.Case;
+Task2 = cell2mat(labeledData.Task2);
+labeledData = table(Case,Task2)
