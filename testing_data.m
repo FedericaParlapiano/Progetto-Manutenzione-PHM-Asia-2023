@@ -1,6 +1,6 @@
 numWindow = 19;
 
-[yfit,scores]=trainedModel2.predictFcn(testTable);
+[yfit,scores]=ensemble25.predictFcn(testTable);
 
 len = length(yfit);
 
@@ -16,7 +16,7 @@ prediction = [];
 for i = 1:numWindow:len-numWindow+1
     countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
     countOfZeros = numWindow-countOfOnes;
-    if countOfOnes>=5
+    if countOfOnes>=12
         prediction = [prediction, 1];
     else
         prediction = [prediction, 0];
@@ -32,6 +32,8 @@ accuracy = sum(correctPredictions) / numel(label_array);
 % Display accuracy
 disp(['Accuracy: ', num2str(accuracy * 100), '%']);
 
+C = confusionmat(label_array,prediction)
+confusionchart(C)
 
 
 
