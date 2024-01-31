@@ -8,9 +8,9 @@ anomalyTestPercentage = int32((177-153)*testPercentage/100);
 
 
 % num windows
-numWindow = 19;
+numWindow = 10;
 
-trainTable = FeatureTable1_2;
+trainTable = FeatureTable1_1;
 
 anomalyTest = trainTable(153*numWindow+1:(anomalyTestPercentage+153)*numWindow,:);
 trainTable(153*numWindow+1:(anomalyTestPercentage+153)*numWindow,:) = [];
