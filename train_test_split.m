@@ -1,12 +1,13 @@
-% fino a 105 normal, da 106 a 153 fault, da 154 a 177 anomaly
-
 testPercentage = 20;
 
-% num windows
+% num windows fame policy 0.064s
+%numWindow = 19;
+% num windows fame policy 0.128s
 numWindow = 10;
 
 if ismember('Task1', FeatureTable1.Properties.VariableNames)
     % stratified splitting 80-20
+    % fino a 105 normal, da 106 a 153 fault, da 154 a 177 anomaly
     normalTestPercentage = int32(105*testPercentage/100);
     faultTestPercentage = int32((153-105)*testPercentage/100);
     anomalyTestPercentage = int32((177-153)*testPercentage/100);
@@ -24,7 +25,6 @@ if ismember('Task1', FeatureTable1.Properties.VariableNames)
     
     
     testTable = [normalTest; faultTest; anomalyTest];
-    disp('ciao')
 
 elseif ismember('Task2', FeatureTable1.Properties.VariableNames)
     % stratified splitting 80-20
@@ -40,5 +40,11 @@ elseif ismember('Task2', FeatureTable1.Properties.VariableNames)
     trainTable(1:faultTestPercentage*numWindow,:) = [];
     
     testTable = [faultTest; anomalyTest];
-    disp('ciao')
+   
+  elseif ismember('Task3', FeatureTable1.Properties.VariableNames)
+    featureTable = FeatureTable1;
+
+    trainTable = head(featureTable,16*numWindow)
+    testTable = tail(featureTable,8*numWindow)
+
 end
