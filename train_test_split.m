@@ -5,6 +5,7 @@ testPercentage = 20;
 % num windows fame policy 0.128s
 numWindow = 10;
 
+
 if ismember('Task1', FeatureTable1.Properties.VariableNames)
     % stratified splitting 80-20
     % fino a 105 normal, da 106 a 153 fault, da 154 a 177 anomaly
