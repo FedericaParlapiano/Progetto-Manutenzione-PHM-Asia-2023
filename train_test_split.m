@@ -44,7 +44,7 @@ elseif ismember('Task2', FeatureTable1.Properties.VariableNames)
   elseif ismember('Task3', FeatureTable1.Properties.VariableNames)
     featureTable = FeatureTable1;
 
-    trainTable = head(featureTable,16*numWindow)
-    testTable = tail(featureTable,8*numWindow)
+    trainTable = head(featureTable,16*numWindow);
+    testTable = tail(featureTable,8*numWindow);
 
 end
