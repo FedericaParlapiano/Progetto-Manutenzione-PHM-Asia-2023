@@ -1,3 +1,4 @@
+import one_class_classification_chiara.*
 % num windows fame policy 0.064s
 %numWindow = 19;
 % num windows fame policy 0.128s
@@ -8,12 +9,14 @@ dueterzi = int32(numWindow*2/3)
 
 feature = FeatureTable1
 
-[yfit,scores]=ensamble.predictFcn(testTable);
+[yfit,scores]=trainedModel.predictFcn(testTable);
 len = length(yfit);
 
-labels = testTable.Task3;
+labels = testTable.Task2;
+%labels = testTable.Task3;
 
 label_array = [];
+
 
 for i = 1:numWindow:len-numWindow+1
     label_array = [label_array, labels(i)];
@@ -46,6 +49,10 @@ if ismember('Task1', feature.Properties.VariableNames)
     confusionchart(C, classLabels)
 
 elseif ismember('Task2', feature.Properties.VariableNames)
+    [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, noiseData, numWindow, maggioranza)
+    
+    [yfit,scores]=trainedModel.predictFcn(notUnknownMembers);
+
     for i = 1:numWindow:len-numWindow+1
         countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
         countOfThree = numWindow-countOfTwo;
