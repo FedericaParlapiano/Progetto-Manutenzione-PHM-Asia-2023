@@ -1,20 +1,21 @@
 import one_class_classification_chiara.*
-% num windows fame policy 0.064s
-% numWindow = 19;
-% num windows fame policy 0.128s
-numWindow = 10;
+% num windows frame policy 0.064s
+numWindow = 19;
+% num windows frame policy 0.128s
+% numWindow = 10;
 
 maggioranza = int32(numWindow/2)
 dueterzi = int32(numWindow*2/3)
 
-feature = FeatureTable1_2;
-noiseData = FeatureTable1_2(721:820,:);
+feature = FeatureTable1;
+noiseData = FeatureTable1(721:820,:);
 
 [yfit,scores]=trainedModel1.predictFcn(testTable);
 len = length(yfit);
 
-labels = testTable.Task2;
+%labels = testTable.Task2;
 %labels = testTable.Task3;
+labels = testTable.Task4;
 
 label_array = [];
 
@@ -120,6 +121,41 @@ elseif ismember('Task3', feature.Properties.VariableNames)
     disp(['Accuracy: ', num2str(accuracy * 100), '%']);
     
     classLabels = {'BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BV1'};
+    
+    C = confusionmat(label_array,prediction)
+    confusionchart(C,classLabels)
+
+elseif ismember('Task4', feature.Properties.VariableNames)
+    for i = 1:numWindow:len-numWindow+1
+        countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
+        countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
+        countOfThree = sum(yfit(i:i+numWindow-1) == 3);
+        countOfFour = sum(yfit(i:i+numWindow-1) == 4);
+        if countOfOnes>=dueterzi
+            prediction = [prediction, 1];
+        elseif countOfTwos>=dueterzi
+            prediction = [prediction, 2];
+        elseif countOfThree>=dueterzi
+            prediction = [prediction, 3];
+        elseif countOfFour>=dueterzi
+            prediction = [prediction, 4];
+        else
+            count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
+            [M, I] = max(count);
+            prediction = [prediction, I];
+
+        end
+    end
+
+    correctPredictions = label_array == prediction;
+    
+    % Calculate accuracy
+    accuracy = sum(correctPredictions) / numel(label_array);
+    
+    % Display accuracy
+    disp(['Accuracy: ', num2str(accuracy * 100), '%']);
+    
+    classLabels = {'SV1', 'SV2', 'SV3', 'SV4'};
     
     C = confusionmat(label_array,prediction)
     confusionchart(C,classLabels)
