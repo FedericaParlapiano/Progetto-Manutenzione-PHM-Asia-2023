@@ -52,8 +52,8 @@ elseif ismember('Task4', features.Properties.VariableNames)
     subset_sv3 = features(features.Task4 == 3, :);
     subset_sv4 = features(features.Task4 == 4, :);
 
-    trainTable = [head(subset_sv1,)] 
-    testTable =
+    trainTable = [head(subset_sv1,10*numWindow); head(subset_sv2,10*numWindow); head(subset_sv3,10*numWindow); head(subset_sv4,10*numWindow)]; 
+    testTable = [tail(subset_sv1,2*numWindow); tail(subset_sv2,2*numWindow); tail(subset_sv3,2*numWindow); tail(subset_sv4,2*numWindow)];
     
     
 end
