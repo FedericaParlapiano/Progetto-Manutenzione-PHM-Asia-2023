@@ -1,7 +1,7 @@
 testPercentage = 20;
 
 % num windows fame policy 0.064s
-%numWindow = 19;
+% numWindow = 19;
 % num windows fame policy 0.128s
 numWindow = 10;
 
@@ -42,7 +42,11 @@ elseif ismember('Task2', features.Properties.VariableNames)
    
 elseif ismember('Task3', features.Properties.VariableNames)
 
-    trainTable = head(trainTable,16*numWindow);
-    testTable = tail(trainTable,8*numWindow);
+    trainTable = head(features,16*numWindow);
+    testTable = tail(features,8*numWindow);
 
+elseif ismember('Task4', features.Properties.VariableNames)
+
+    trainTable = head(features,32*numWindow);
+    testTable = tail(features,16*numWindow);
 end
