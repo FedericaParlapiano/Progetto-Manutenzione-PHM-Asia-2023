@@ -1,6 +1,6 @@
 import one_class_classification_chiara.*
 % num windows fame policy 0.064s
-%numWindow = 19;
+% numWindow = 19;
 % num windows fame policy 0.128s
 numWindow = 10;
 
