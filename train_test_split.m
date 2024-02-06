@@ -6,7 +6,7 @@ testPercentage = 20;
 numWindow = 10;
 
 features = FeatureTable1;
-trainTable = features;
+trainTable = FeatureTable1;
 
 
 if ismember('Task1', features.Properties.VariableNames)
@@ -46,7 +46,14 @@ elseif ismember('Task3', features.Properties.VariableNames)
     testTable = tail(features,8*numWindow);
 
 elseif ismember('Task4', features.Properties.VariableNames)
+   
+    subset_sv1 = features(features.Task4 == 1, :);   
+    subset_sv2 = features(features.Task4 == 2, :);
+    subset_sv3 = features(features.Task4 == 3, :);
+    subset_sv4 = features(features.Task4 == 4, :);
 
-    trainTable = head(features,32*numWindow);
-    testTable = tail(features,16*numWindow);
+    trainTable = [head(subset_sv1,)] 
+    testTable =
+    
+    
 end
