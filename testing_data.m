@@ -7,9 +7,10 @@ numWindow = 10;
 maggioranza = int32(numWindow/2)
 dueterzi = int32(numWindow*2/3)
 
-feature = FeatureTable1
+feature = FeatureTable1_2;
+noiseData = FeatureTable1_2(721:820,:);
 
-[yfit,scores]=trainedModel.predictFcn(testTable);
+[yfit,scores]=trainedModel1.predictFcn(testTable);
 len = length(yfit);
 
 labels = testTable.Task2;
@@ -51,12 +52,12 @@ if ismember('Task1', feature.Properties.VariableNames)
 elseif ismember('Task2', feature.Properties.VariableNames)
     [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, noiseData, numWindow, maggioranza)
     
-    [yfit,scores]=trainedModel.predictFcn(notUnknownMembers);
+    [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
 
     for i = 1:numWindow:len-numWindow+1
         countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
         countOfThree = numWindow-countOfTwo;
-        if countOfTwo>=maggioranza
+        if countOfTwo>=dueterzi
             prediction = [prediction, 2];
         else
             prediction = [prediction, 3];
