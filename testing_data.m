@@ -4,20 +4,23 @@ import one_class_classification_chiara.*
 % num windows fame policy 0.128s
 numWindow = 10;
 
-maggioranza = int32(numWindow/2)
-dueterzi = int32(numWindow*2/3)
+maggioranza = int32(numWindow/2);
+dueterzi = int32(numWindow*2/3);
 
-feature = FeatureTable1_2;
-noiseData = FeatureTable1_2(721:820,:);
 
-[yfit,scores]=trainedModel1.predictFcn(testTable);
-len = length(yfit);
+feature = FeatureTable1;
+noiseData = FeatureTable;
+%noiseData = FeatureTable1_2(721:820,:);
+
+%[yfit,scores]=trainedModel1.predictFcn(testTable);
+%len = length(yfit);
+
+len=150;
 
 labels = testTable.Task2;
 %labels = testTable.Task3;
 
 label_array = [];
-
 
 for i = 1:numWindow:len-numWindow+1
     label_array = [label_array, labels(i)];
@@ -50,9 +53,9 @@ if ismember('Task1', feature.Properties.VariableNames)
     confusionchart(C, classLabels)
 
 elseif ismember('Task2', feature.Properties.VariableNames)
-    [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, noiseData, numWindow, maggioranza)
+    [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, noiseData, numWindow, maggioranza);
     
-    [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
+    %[yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
 
     for i = 1:numWindow:len-numWindow+1
         countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
@@ -121,7 +124,7 @@ elseif ismember('Task3', feature.Properties.VariableNames)
     
     classLabels = {'BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BV1'};
     
-    C = confusionmat(label_array,prediction)
-    confusionchart(C,classLabels)
+    C = confusionmat(label_array,prediction);
+    confusionchart(C,classLabels);
  
 end

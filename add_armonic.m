@@ -1,3 +1,5 @@
+import generatefunction_task2_128.*
+
 clc;
 fs = 0.001;
 t = 0:fs:1.2;
@@ -21,6 +23,8 @@ end
 noiseSignal = head(noiseSignal,10);
 
 plot(t,noiseSignal.Case{i,1}.P1)
+
+[FeatureTable, x] = generatefunction_task2_128(noiseSignal);
 
 % dataFolder = 'dataset/train/data/';
 % files = dir(fullfile(dataFolder, '*.csv'));
