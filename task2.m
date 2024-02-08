@@ -33,11 +33,11 @@ for i = 1:numel(X)
     if labelsTable{i, "Condition"} == "Normal"
         labeledData{i, 2} = 'toDrop';
     elseif labelsTable{i,"SV1"}~=100 || labelsTable{i,"SV2"}~=100 || labelsTable{i,"SV3"}~=100 || labelsTable{i,"SV4"}~=100
-        labeledData{i, 2} = 3;
+        labeledData{i, 2} = 0;
     elseif labelsTable{i,"BP1"}=="Yes" || labelsTable{i,"BP2"}=="Yes" || labelsTable{i,"BP3"}=="Yes" || labelsTable{i,"BP4"}=="Yes" || labelsTable{i,"BP5"}=="Yes" || labelsTable{i,"BP6"}=="Yes" || labelsTable{i,"BP7"}=="Yes" || labelsTable{i,"BV1"}=="Yes"
-         labeledData{i, 2} = 2;
+         labeledData{i, 2} = 0;
     else 
-        labeledData{i, 2} = 1;
+        labeledData{i, 2} = 0;
     end    
 
 end
@@ -48,4 +48,4 @@ toDelete = strcmp(labeledData.Task2, "toDrop");
 labeledData(toDelete,:) = [];
 Case = labeledData.Case;
 Task2 = cell2mat(labeledData.Task2);
-labeledData = table(Case,Task2)
+labeledData = table(Case,Task2);
