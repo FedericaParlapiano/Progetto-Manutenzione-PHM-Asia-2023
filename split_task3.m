@@ -104,4 +104,3 @@ Case = labeledData.Case;
 Task3 = cell2mat(labeledData.Task3);
 labeledData = table(Case,Task3);
 size(labeledData)
-
