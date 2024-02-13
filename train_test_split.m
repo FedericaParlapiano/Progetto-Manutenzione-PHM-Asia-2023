@@ -99,8 +99,8 @@ elseif ismember('Task4', features.Properties.VariableNames)
     subsets = {subset_sv1, subset_sv2, subset_sv3, subset_sv4};
 
     for i=1:n_class
-        n = randperm(n_class+1);
-        n = n(1:n_step)-1;
+        n = randperm(n_class*2+1);
+        n = n(1:n_step*2)-1;
         for j=1:length(n)
             r = n(j)*numWindow+1;
             subset = subsets(1,i);
