@@ -5,8 +5,11 @@ testPercentage = 20;
 % num windows fame policy 0.128s
 % numWindow = 10;
 % num windows fame policy 0.128s split case
-num_split = 3;
 numWindow = 4;
+% num windows fame policy 0.064s split case
+numWindow = 7;
+
+n_step = 3;
 
 features = FeatureTable1;
 trainTable = FeatureTable1;
@@ -106,7 +109,8 @@ elseif ismember('Task4', features.Properties.VariableNames)
         end
     end
 
-    trainTable = [head(subset_sv1,10*numWindow); head(subset_sv2,10*numWindow); head(subset_sv3,10*numWindow); head(subset_sv4,10*numWindow)]; 
-    testTable = [tail(subset_sv1,2*numWindow); tail(subset_sv2,2*numWindow); tail(subset_sv3,2*numWindow); tail(subset_sv4,2*numWindow)];
-    
+    indici_da_eliminare = ismember(features.EnsembleID_, testTable.EnsembleID_);
+    trainTable = features;
+    trainTable(indici_da_eliminare, :) = [];
+
 end
