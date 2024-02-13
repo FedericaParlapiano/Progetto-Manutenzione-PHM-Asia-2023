@@ -113,4 +113,30 @@ elseif ismember('Task4', features.Properties.VariableNames)
     trainTable = features;
     trainTable(indici_da_eliminare, :) = [];
 
+ elseif ismember('Task5', features.Properties.VariableNames)
+
+    n_class = 4;
+    subset_1 = features(features.Task5 == 25, :);   
+    subset_2 = features(features.Task5 == 50, :);
+    subset_3 = features(features.Task5 == 75, :);
+    subset_4 = features(features.Task5 == 0, :);
+
+    testTable = [];
+    subsets = {subset_1, subset_2, subset_3, subset_4};
+
+    for i=1:n_class
+        n = randperm(n_class*2+1);
+        n = n(1:n_step*2)-1;
+        for j=1:length(n)
+            r = n(j)*numWindow+1;
+            subset = subsets(1,i);
+            subset = subset{1,1};
+            testTable = [testTable; subset(r:r+numWindow-1, :)];
+        end
+    end
+
+    indici_da_eliminare = ismember(features.EnsembleID_, testTable.EnsembleID_);
+    trainTable = features;
+    trainTable(indici_da_eliminare, :) = [];
+
 end
