@@ -45,6 +45,7 @@ elseif ismember('Task2', features.Properties.VariableNames)
    
 elseif ismember('Task3', features.Properties.VariableNames)
 
+    n_class=8;
     groups = findgroups(features.Task3);
 
     idx_1 = find(groups == 1);
@@ -56,26 +57,26 @@ elseif ismember('Task3', features.Properties.VariableNames)
     idx_7 = find(groups == 7);
     idx_8 = find(groups == 8);
   
-    rows_1 = features(idx_1,:);
-    rows_2 = features(idx_2,:);
-    rows_3 = features(idx_3,:);
-    rows_4 = features(idx_4,:);
-    rows_5 = features(idx_5,:);
-    rows_6 = features(idx_6,:);
-    rows_7 = features(idx_7,:);
-    rows_8 = features(idx_8,:);
+    subset_1 = features(idx_1,:);
+    subset_2 = features(idx_2,:);
+    subset_3 = features(idx_3,:);
+    subset_4 = features(idx_4,:);
+    subset_5 = features(idx_5,:);
+    subset_6 = features(idx_6,:);
+    subset_7 = features(idx_7,:);
+    subset_8 = features(idx_8,:);
 
     testTable = [];
-    rows = {rows_1, rows_2, rows_3, rows_4, rows_5, rows_6, rows_7, rows_8};
-    
-    for i=1:8
-        n = randperm(length(choice)+1);
+    subsets = {subset_1, subset_2, subset_3, subset_4, subset_5, subset_6, subset_7, subset_8};
+
+    for i=1:n_class
+        n = randperm(n_class+1);
         n = n(1:n_step)-1;
         for j=1:length(n)
             r = n(j)*numWindow+1;
-            row = rows(1,i);
-            row = row{1,1};
-            testTable = [testTable; row(r:r+numWindow-1, :)];
+            subset = subsets(1,i);
+            subset = subset{1,1};
+            testTable = [testTable; subset(r:r+numWindow-1, :)];
         end
     end
 
@@ -85,10 +86,25 @@ elseif ismember('Task3', features.Properties.VariableNames)
 
 elseif ismember('Task4', features.Properties.VariableNames)
    
+    n_class = 4;
     subset_sv1 = features(features.Task4 == 1, :);   
     subset_sv2 = features(features.Task4 == 2, :);
     subset_sv3 = features(features.Task4 == 3, :);
     subset_sv4 = features(features.Task4 == 4, :);
+
+    testTable = [];
+    subsets = {subset_sv1, subset_sv2, subset_sv3, subset_sv4};
+
+    for i=1:n_class
+        n = randperm(n_class+1);
+        n = n(1:n_step)-1;
+        for j=1:length(n)
+            r = n(j)*numWindow+1;
+            subset = subsets(1,i);
+            subset = subset{1,1};
+            testTable = [testTable; subset(r:r+numWindow-1, :)];
+        end
+    end
 
     trainTable = [head(subset_sv1,10*numWindow); head(subset_sv2,10*numWindow); head(subset_sv3,10*numWindow); head(subset_sv4,10*numWindow)]; 
     testTable = [tail(subset_sv1,2*numWindow); tail(subset_sv2,2*numWindow); tail(subset_sv3,2*numWindow); tail(subset_sv4,2*numWindow)];
