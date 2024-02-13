@@ -13,7 +13,7 @@ end
 labelsFile = 'dataset/train/labels.xlsx';
 labelsTable = readtable(labelsFile);
 labelsTable = renamevars(labelsTable,["Var1","Var2","Var3"],["Case","Spacecraft","Condition"]);
-labels = labelsTable.Condition; 
+labels = labelsTable.Condition;
 
 X = data;
 [numRows,numCols] = size(data{1});
@@ -85,10 +85,10 @@ for i = 1:numel(X)
 end
 
 labeledData = cell2table(labeledData);
-labeledData = renamevars(labeledData,["labeledData1","labeledData2"],["Case","Task4"]);
-toDelete = strcmp(labeledData.Task4, "toDrop");
+labeledData = renamevars(labeledData,["labeledData1","labeledData2"],["Case","Task5"]);
+toDelete = strcmp(labeledData.Task5, "toDrop");
 labeledData(toDelete,:) = [];
 Case = labeledData.Case;
-Task4 = cell2mat(labeledData.Task4);
-labeledData = table(Case,Task4);
+Task5 = cell2mat(labeledData.Task5);
+labeledData = table(Case,Task5);
 size(labeledData)
