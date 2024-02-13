@@ -3,7 +3,10 @@ testPercentage = 20;
 % num windows fame policy 0.064s
 % numWindow = 19;
 % num windows fame policy 0.128s
-numWindow = 10;
+% numWindow = 10;
+% num windows fame policy 0.128s split case
+num_split = 3;
+numWindow = 4;
 
 features = FeatureTable1;
 trainTable = FeatureTable1;
@@ -42,8 +45,43 @@ elseif ismember('Task2', features.Properties.VariableNames)
    
 elseif ismember('Task3', features.Properties.VariableNames)
 
-    trainTable = head(features,16*numWindow);
-    testTable = tail(features,8*numWindow);
+    groups = findgroups(features.Task3);
+
+    idx_1 = find(groups == 1);
+    idx_2 = find(groups == 2);
+    idx_3 = find(groups == 3);
+    idx_4 = find(groups == 4);
+    idx_5 = find(groups == 5);
+    idx_6 = find(groups == 6);    
+    idx_7 = find(groups == 7);
+    idx_8 = find(groups == 8);
+  
+    rows_1 = features(idx_1,:);
+    rows_2 = features(idx_2,:);
+    rows_3 = features(idx_3,:);
+    rows_4 = features(idx_4,:);
+    rows_5 = features(idx_5,:);
+    rows_6 = features(idx_6,:);
+    rows_7 = features(idx_7,:);
+    rows_8 = features(idx_8,:);
+
+    testTable = [];
+    rows = {rows_1, rows_2, rows_3, rows_4, rows_5, rows_6, rows_7, rows_8};
+    
+    for i=1:8
+        n = randperm(length(choice)+1);
+        n = n(1:n_step)-1;
+        for j=1:length(n)
+            r = n(j)*numWindow+1;
+            row = rows(1,i);
+            row = row{1,1};
+            testTable = [testTable; row(r:r+numWindow-1, :)];
+        end
+    end
+
+    indici_da_eliminare = ismember(features.EnsembleID_, testTable.EnsembleID_);
+    trainTable = features;
+    trainTable(indici_da_eliminare, :) = [];
 
 elseif ismember('Task4', features.Properties.VariableNames)
    
@@ -54,6 +92,5 @@ elseif ismember('Task4', features.Properties.VariableNames)
 
     trainTable = [head(subset_sv1,10*numWindow); head(subset_sv2,10*numWindow); head(subset_sv3,10*numWindow); head(subset_sv4,10*numWindow)]; 
     testTable = [tail(subset_sv1,2*numWindow); tail(subset_sv2,2*numWindow); tail(subset_sv3,2*numWindow); tail(subset_sv4,2*numWindow)];
-    
     
 end
