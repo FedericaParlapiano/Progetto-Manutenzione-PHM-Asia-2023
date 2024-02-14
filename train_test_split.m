@@ -73,7 +73,7 @@ elseif ismember('Task3', features.Properties.VariableNames)
     subsets = {subset_1, subset_2, subset_3, subset_4, subset_5, subset_6, subset_7, subset_8};
 
     for i=1:n_class
-        n = randperm(height(subset_1)/numWindow+1);
+        n = randperm((height(subset_1)/numWindow)-1);
         n = n(1:n_step)-1;
         for j=1:length(n)
             r = n(j)*numWindow+1;
@@ -99,7 +99,7 @@ elseif ismember('Task4', features.Properties.VariableNames)
     subsets = {subset_sv1, subset_sv2, subset_sv3, subset_sv4};
 
     for i=1:n_class
-        n = randperm(height(subset_sv1)/numWindow+1);
+        n = randperm((height(subset_sv1)/numWindow)-1);
         n = n(1:n_step*2)-1;
         for j=1:length(n)
             r = n(j)*numWindow+1;
@@ -125,7 +125,7 @@ elseif ismember('Task4', features.Properties.VariableNames)
     subsets = {subset_1, subset_2, subset_3, subset_4};
 
     for i=1:n_class
-        n = randperm(lenght(subset_1)/numWindow+1);
+        n = randperm((lenght(subset_1)/numWindow)-1);
         n = n(1:n_step*2)-1;
         for j=1:length(n)
             r = n(j)*numWindow+1;
