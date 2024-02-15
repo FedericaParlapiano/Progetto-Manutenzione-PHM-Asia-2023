@@ -3,10 +3,11 @@ import generatefunction_task2_128.*
 clc;
 fs = 0.001;
 t = 0:fs:1.2;
-f = 50;
-v1 = 10*sin(2*pi*f*t);
+f = 1;
+v1 = sin(2*pi*f*t);
 v3 = 3*sin(2*pi*3*f*t);
 v5 = 2*sin(2*pi*5*f*t);
+
 
 noiseSignal = labeledData;
 
@@ -21,8 +22,19 @@ for i=1:10
 end
 
 noiseSignal = head(noiseSignal,10);
+noiseSignal(:,2) = {1};
+labeledData = [labeledData; noiseSignal]
 
-plot(t,noiseSignal.Case{i,1}.P1)
+plot(t,labeledData.Case{i,1}.P1);
+hold on
+plot(t,noiseSignal.Case{i,1}.P1);
+hold on
+plot(t,v1+v3+v5);
+
+[featureTable,outputTable] = diagnosticFeatures(noiseSignal)
+
+
+
 
 [FeatureTable, x] = generatefunction_task2_128(noiseSignal);
 
@@ -51,5 +63,3 @@ plot(t,noiseSignal.Case{i,1}.P1)
 % end
 % 
 % plot(t, data{1,1}{:,2})
-
-

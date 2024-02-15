@@ -1,3 +1,5 @@
+import diagnosticFeatures.*;
+
 signalData = labeledData;
 
 for i=1:10
@@ -30,4 +32,5 @@ figure(2);
 plot(noise_signal)
 
 [FeatureTable, x] = generatefunction_task2_128(noiseSignal);
+
 

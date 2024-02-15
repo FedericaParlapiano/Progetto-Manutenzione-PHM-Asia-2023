@@ -48,4 +48,8 @@ toDelete = strcmp(labeledData.Task2, "toDrop");
 labeledData(toDelete,:) = [];
 Case = labeledData.Case;
 Task2 = cell2mat(labeledData.Task2);
+<<<<<<< Updated upstream
 labeledData = table(Case,Task2)
+=======
+labeledData = table(Case,Task2);
+>>>>>>> Stashed changes

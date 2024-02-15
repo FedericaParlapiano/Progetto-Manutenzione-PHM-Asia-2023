@@ -21,22 +21,14 @@ n_step = 3;
 step = (numRows-1)/n_step;
 
 header = X{1,1}.Properties.VariableNames;
-allVars = 1:width(X{1,1});
 
 j = 0;
 for i=1:numel(X)
     split_case{j+1, 1} = X{1,i}{1:step,:};
-    split_case{j+1, 1} = array2table(split_case{j+1, 1});
-    split_case{j+1, 1} = renamevars(split_case{j+1, 1},allVars,header);
-
-    split_case{j+2, 1} = X{1,i}{step+1:step*2,:};
-    split_case{j+2, 1} = array2table(split_case{j+2, 1});
-    split_case{j+2, 1} = renamevars(split_case{j+2, 1},allVars,header);
+    array2table(split_case{j+1, 1})
     
+    split_case{j+2, 1} = X{1,i}{step+1:step*2,:};
     split_case{j+3, 1} = X{1,i}{step*2+1:step*3+1,:};
-    split_case{j+3, 1} = array2table(split_case{j+3, 1});
-    split_case{j+3, 1} = renamevars(split_case{j+3, 1},allVars,header);
-
     j = j+n_step;
 end
 
@@ -104,3 +96,4 @@ Case = labeledData.Case;
 Task3 = cell2mat(labeledData.Task3);
 labeledData = table(Case,Task3);
 size(labeledData)
+
