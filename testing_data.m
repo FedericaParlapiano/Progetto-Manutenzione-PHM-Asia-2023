@@ -1,8 +1,8 @@
 import one_class_classification_chiara.*
 % num windows frame policy 0.064s
-% numWindow = 19;
+numWindow = 19;
 % num windows frame policy 0.128s
-numWindow = 4;
+% numWindow = 10;
 
 maggioranza = int32(numWindow/2);
 dueterzi = int32(numWindow*2/3);
@@ -17,6 +17,7 @@ len = length(yfit);
 %labels = testTable.Task2;
 %labels = testTable.Task3;
 labels = testTable.Task5;
+%labels = testTable.Task4;
 
 label_array = [];
 
@@ -89,21 +90,21 @@ elseif ismember('Task3', feature.Properties.VariableNames)
         countOfSix = sum(yfit(i:i+numWindow-1) == 6);
         countOfSeven = sum(yfit(i:i+numWindow-1) == 7);
         countOfEight = sum(yfit(i:i+numWindow-1) == 8);
-        if countOfOnes>=dueterzi
+        if countOfOnes>=maggioranza
             prediction = [prediction, 1];
-        elseif countOfTwos>=dueterzi
+        elseif countOfTwos>=maggioranza
             prediction = [prediction, 2];
-        elseif countOfThree>=dueterzi
+        elseif countOfThree>=maggioranza
             prediction = [prediction, 3];
-        elseif countOfFour>=dueterzi
+        elseif countOfFour>=maggioranza
             prediction = [prediction, 4];
-        elseif countOfFive>=dueterzi
+        elseif countOfFive>=maggioranza
             prediction = [prediction, 5];
-        elseif countOfSix>=dueterzi
+        elseif countOfSix>=maggioranza
             prediction = [prediction, 6];
-        elseif countOfSeven>=dueterzi
+        elseif countOfSeven>=maggioranza
             prediction = [prediction, 7];
-        elseif countOfEight>=dueterzi
+        elseif countOfEight>=maggioranza
             prediction = [prediction, 8];
         else
             count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];

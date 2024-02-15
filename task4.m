@@ -29,7 +29,7 @@ labeledData = cell(numel(X),2);
 for i = 1:numel(X)
     labeledData{i, 1} = X{i};
     
-    % Task4: associo a ogni campione l'etichetta SV1-SV4 
+    % Task4: associo a ogni campione l'etichetta SV1-SV4
     if labelsTable{i, "Condition"} == "Normal" || (labelsTable{i,"SV1"}==100 && labelsTable{i,"SV2"}==100 && labelsTable{i,"SV3"}==100 && labelsTable{i,"SV4"}==100)
         labeledData{i, 2} = 'toDrop';
     elseif labelsTable{i,'SV1'}~=100
@@ -51,4 +51,3 @@ Case = labeledData.Case;
 Task4 = cell2mat(labeledData.Task4);
 labeledData = table(Case,Task4);
 size(labeledData)
-

@@ -13,7 +13,7 @@ end
 labelsFile = 'dataset/train/labels.xlsx';
 labelsTable = readtable(labelsFile);
 labelsTable = renamevars(labelsTable,["Var1","Var2","Var3"],["Case","Spacecraft","Condition"]);
-labels = labelsTable.Condition; 
+labels = labelsTable.Condition;
 
 
 X = data;

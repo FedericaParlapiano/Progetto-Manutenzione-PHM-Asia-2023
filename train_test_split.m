@@ -5,14 +5,16 @@ testPercentage = 20;
 % num windows fame policy 0.128s
 % numWindow = 10;
 % num windows fame policy 0.128s split case
-numWindow = 4;
 % num windows fame policy 0.064s split case
 % numWindow = 7;
 
-n_step = 3;
 
-features = FeatureTable1;
-trainTable = FeatureTable1;
+n_step = 1;
+num_split = 1;
+numWindow = 19;
+
+features = FeatureTable1_1;
+trainTable = FeatureTable1_1;
 
 
 if ismember('Task1', features.Properties.VariableNames)
