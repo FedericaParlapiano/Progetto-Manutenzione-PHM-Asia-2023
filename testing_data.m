@@ -8,9 +8,10 @@ maggioranza = int32(numWindow/2);
 dueterzi = int32(numWindow*2/3);
 
 feature = FeatureTable1;
-%noiseData = FeatureTable1(721:820,:);
+% noiseData = FeatureTable1(721:820,:);
 
-[yfit,scores]=trainedModel1.predictFcn(testTable);
+% [yfit,scores]=trainedModel1.predictFcn(testTable);
+yfit=trainedModel1.predictFcn(testTable);
 len = length(yfit);
 
 %labels = testTable.Task2;
@@ -160,7 +161,7 @@ elseif ismember('Task4', feature.Properties.VariableNames)
     C = confusionmat(label_array,prediction)
     confusionchart(C,classLabels)
 
-elseif ismember('Task5', feature.Properties.VariableNames)
+elseif ismember('Task5classification', feature.Properties.VariableNames)
     for i = 1:numWindow:len-numWindow+1
         countOfOnes = sum(yfit(i:i+numWindow-1) == 0);
         countOfTwos = sum(yfit(i:i+numWindow-1) == 25);
@@ -194,5 +195,24 @@ elseif ismember('Task5', feature.Properties.VariableNames)
     
     C = confusionmat(label_array,prediction)
     confusionchart(C,classLabels)
- 
+
+elseif ismember('Task5', feature.Properties.VariableNames)  
+    
+    for i = 1:numWindow:len-numWindow+1
+        % prediction_mean = [];
+        prediction_median = [];
+        for j = i:i+numWindow-1
+            % prediction_mean = [prediction_mean, yfit(j)];
+            prediction_median = [prediction_median, yfit(j)];
+        end
+        % prediction = [prediction, mean(prediction_mean)];
+        prediction = [prediction, median(prediction_median)];
+    end
+    
+    % RMSE_mean = rmse(label_array, prediction);
+    RMSE_median = rmse(label_array, prediction);
+
+    disp(['RMSE_mean: ', num2str(RMSE_mean)]);
+    disp(['RMSE_median: ', num2str(RMSE_median)]);
+   
 end
