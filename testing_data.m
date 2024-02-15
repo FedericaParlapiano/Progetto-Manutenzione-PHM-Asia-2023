@@ -32,7 +32,7 @@ if ismember('Task1', feature.Properties.VariableNames)
     for i = 1:numWindow:len-numWindow+1
         countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
         countOfZeros = numWindow-countOfOnes;
-        if countOfOnes>=maggioranza
+        if countOfOnes>=dueterzi
             prediction = [prediction, 1];
         else
             prediction = [prediction, 0];
