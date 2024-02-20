@@ -1,22 +1,19 @@
-function [count, prediction] = testing_unlabeled_data(numWindow, trainTable, testTable, trainedModel)
+function [count, prediction] = testing_unlabeled_data(numWindow, testTable, trainedModel)
 
 import one_class_classification.*
 
     
     maggioranza = int32(numWindow/2);
     dueterzi = int32(numWindow*2/3);
-    
-    feature = trainTable;
 
-
-    if isempty(trainedModel) == 0
+    if class(trainedModel) ~= "OneClassSVM"
         [yfit,scores]=trainedModel.predictFcn(testTable);
         len = length(yfit);
         
         prediction = [];
     end
     
-    if ismember('Task1', trainTable.Properties.VariableNames)
+    if ismember('Task1', testTable.Properties.VariableNames)
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfZeros = numWindow-countOfOnes;
@@ -38,15 +35,15 @@ import one_class_classification.*
 
         count = dictionary(names,wheels)
 
-    elseif (ismember('Task2', trainTable.Properties.VariableNames) && isempty(trainedModel))
-        [prediction] = one_class_classification(trainTable, testTable, numWindow, maggioranza)
+    elseif (ismember('Task2', testTable.Properties.VariableNames) && class(trainedModel) == "OneClassSVM")
+        [prediction] = one_class_classification(testTable, numWindow)
     
         wheels = [length(prediction(prediction == 0)) length(prediction(prediction == 1))];
         names = ["Class 0" "Class 1"];
     
         count = dictionary(names,wheels)
  
-    elseif ismember('Task2', trainTable.Properties.VariableNames)
+    elseif ismember('Task2', testTable.Properties.VariableNames)
         [yfit,scores]=trainedModel.predictFcn(testTable);
 
         for i = 1:numWindow:len-numWindow+1
@@ -62,11 +59,87 @@ import one_class_classification.*
         names = ["Class 2" "Class 3"];
     
         count = dictionary(names,wheels)
+    
+    elseif ismember('Task3', testTable.Properties.VariableNames)
+        for i = 1:numWindow:len-numWindow+1
+            countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
+            countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
+            countOfThree = sum(yfit(i:i+numWindow-1) == 3);
+            countOfFour = sum(yfit(i:i+numWindow-1) == 4);
+            countOfFive = sum(yfit(i:i+numWindow-1) == 5);
+            countOfSix = sum(yfit(i:i+numWindow-1) == 6);
+            countOfSeven = sum(yfit(i:i+numWindow-1) == 7);
+            countOfEight = sum(yfit(i:i+numWindow-1) == 8);
+            if countOfOnes>=dueterzi
+                prediction = [prediction, 1];
+            elseif countOfTwos>=dueterzi
+                prediction = [prediction, 2];
+            elseif countOfThree>=dueterzi
+                prediction = [prediction, 3];
+            elseif countOfFour>=dueterzi
+                prediction = [prediction, 4];
+            elseif countOfFive>=dueterzi
+                prediction = [prediction, 5];
+            elseif countOfSix>=dueterzi
+                prediction = [prediction, 6];
+            elseif countOfSeven>=dueterzi
+                prediction = [prediction, 7];
+            elseif countOfEight>=dueterzi
+                prediction = [prediction, 8];
+            else
+                count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
+                [M, I] = max(count);
+                prediction = [prediction, I];
+    
+            end
+        end
+    
+    elseif ismember('Task4', testTable.Properties.VariableNames)
+        for i = 1:numWindow:len-numWindow+1
+            countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
+            countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
+            countOfThree = sum(yfit(i:i+numWindow-1) == 3);
+            countOfFour = sum(yfit(i:i+numWindow-1) == 4);
+            if countOfOnes>=dueterzi
+                prediction = [prediction, 1];
+            elseif countOfTwos>=dueterzi
+                prediction = [prediction, 2];
+            elseif countOfThree>=dueterzi
+                prediction = [prediction, 3];
+            elseif countOfFour>=dueterzi
+                prediction = [prediction, 4];
+            else
+                count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
+                [M, I] = max(count);
+                prediction = [prediction, I];
+    
+            end
+        end
+
+    elseif ismember('Task5', testTable.Properties.VariableNames)
+        for i = 1:numWindow:len-numWindow+1
+            countOfOnes = sum(yfit(i:i+numWindow-1) == 0);
+            countOfTwos = sum(yfit(i:i+numWindow-1) == 25);
+            countOfThree = sum(yfit(i:i+numWindow-1) == 50);
+            countOfFour = sum(yfit(i:i+numWindow-1) == 75);
+            if countOfOnes>=dueterzi
+                prediction = [prediction, 0];
+            elseif countOfTwos>=dueterzi
+                prediction = [prediction, 25];
+            elseif countOfThree>=dueterzi
+                prediction = [prediction, 50];
+            elseif countOfFour>=dueterzi
+                prediction = [prediction, 75];
+            else
+                count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
+                [M, I] = max(count);
+                prediction = [prediction, (I-1)*25];
+            end
+        end
+
     end
 end
 
-    
-    
         % % PCA dati
         % [coeff,score,latent,~,explained] = pca(data.Case{:,1});
         % 

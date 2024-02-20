@@ -1,12 +1,10 @@
-function [pred] = one_class_classification(trainTable, testTable, numWindow, maggioranza)
+function [pred] = one_class_classification(testTable, numWindow)
     load('classificatori/unknown.mat')
     
-    if ismember('Task2', trainTable.Properties.VariableNames)
-        trainTable = removevars(trainTable,["Task2"]);
+    if ismember('Task2', testTable.Properties.VariableNames)
         testTable = removevars(testTable,["Task2"]);
     end
-    if ismember('EnsembleID_', trainTable.Properties.VariableNames)
-        trainTable = removevars(trainTable,["EnsembleID_"]);
+    if ismember('EnsembleID_', testTable.Properties.VariableNames)
         testTable = removevars(testTable,["EnsembleID_"]);
     end
 
