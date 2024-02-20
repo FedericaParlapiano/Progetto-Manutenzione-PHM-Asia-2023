@@ -1,37 +1,50 @@
 import testing_unlabeled_data.*
 import generate_feature_task1.*
+import generate_function_task2.*
+import generate_function_task2_unknown.*
 import task1.*
 load('classificatori/trainedModel1.mat')
+load('classificatori/unknown.mat')
+load('classificatori/trainedModel2.mat')
 
 
-trainPath = '../dataset/train/data/';
-labelsPath = '../dataset/train/labels.xlsx';
-testPath = '../dataset/test/data/';
-
-
-% task 1
-[trainDataTask1] = task1(trainPath, labelsPath);
-[trainFeatureTable1, x] = generate_feature_task1(trainDataTask1);
-[testDataTask1] = task1(testPath, "");
-[testFeatureTable1, x] = generate_feature_task1(testDataTask1);
+% 
+% trainPath = '../dataset/train/data/';
+% labelsPath = '../dataset/train/labels.xlsx';
+% testPath = '../dataset/test/data/';
+% 
+% 
+% % task 1
+% [trainDataTask1] = task1(trainPath, labelsPath);
+% [trainFeatureTable1, x] = generate_feature_task1(trainDataTask1);
+% [testDataTask1] = task1(testPath, "");
+% [testFeatureTable1, x] = generate_feature_task1(testDataTask1);
+% 
+% % frame policy = 128
+% [count1, prediction1] = testing_unlabeled_data(10, trainFeatureTable1, testFeatureTable1, trainedModel1);
+% fprintf('Data classified as normal (class 0): %d \n', count1("Class 0"));
+% fprintf('Data classified as abnormal (class 1): %d \n', count1("Class 1"));
+% 
+% 
+% % task 2, unknown data
+% [trainDataTask2] = task2(trainPath, labelsPath);
+% [trainFeatureTable2Unknown] = generate_function_task2_unknown(trainDataTask2);
+% testDataTask2 = testDataTask1(prediction1' == 1, :);
+% [testFeatureTable2Unknown] = generate_function_task2_unknown(testDataTask2);
 
 % frame policy = 128
-[count1, prediction1] = testing_unlabeled_data(10, trainFeatureTable1, testFeatureTable1, trainedModel1);
-fprintf('Data classified as normal (class 0): %d \n', count1("Class 0"));
-fprintf('Data classified as abnormal (class 1): %d \n', count1("Class 1"));
+% [count2Unknown, prediction2Unknown] = testing_unlabeled_data(10, trainFeatureTable2Unknown, testFeatureTable2Unknown, struct([]));
+% fprintf('Data classified as not unknown (class 0): %d \n', count2Unknown("Class 0"));
+% fprintf('Data classified as unknown (class 1): %d \n', count2Unknown("Class 1"));
 
 
-% task 2, unknown data
-[trainDataTask2] = task2(trainPath, labelsPath);
-trainDataTask2{:, 2} = 0;
-[trainFeatureTable2Unknown] = generate_function_task2_unknown(trainDataTask2);
-testDataTask2 = testDataTask1(prediction1' == 1, :);
-[testFeatureTable2Unknown] = generate_function_task2_unknown(testDataTask2);
+%testDataTask2 = testDataTask2(prediction2Unknown == 0, :);
+%[testFeatureTable2] = generate_function_task2(testDataTask2);
+[count2, prediction2] = testing_unlabeled_data(10, trainFeatureTable2Unknown, testFeatureTable2, trainedModel2);
 
-% frame policy = 128
-[count2Unknown, prediction2Unknown] = testing_unlabeled_data(10, trainFeatureTable2Unknown, testFeatureTable2Unknown, struct([]));
-fprintf('Data classified as not unknown (class 0): %d \n', count2Unknown("Class 0"));
-fprintf('Data classified as unknown (class 1): %d \n', count2Unknown("Class 1"));
+
+
+
 
 
 

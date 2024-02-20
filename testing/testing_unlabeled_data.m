@@ -20,7 +20,7 @@ import one_class_classification.*
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfZeros = numWindow-countOfOnes;
-            if countOfOnes>=maggioranza
+            if countOfOnes>=dueterzi
                 prediction = [prediction, 1];
             else
                 prediction = [prediction, 0];
@@ -47,7 +47,21 @@ import one_class_classification.*
         count = dictionary(names,wheels)
  
     elseif ismember('Task2', trainTable.Properties.VariableNames)
+        [yfit,scores]=trainedModel.predictFcn(testTable);
 
+        for i = 1:numWindow:len-numWindow+1
+            countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
+            countOfThree = numWindow-countOfTwo;
+            if countOfTwo>=dueterzi
+                prediction = [prediction, 2];
+            else
+                prediction = [prediction, 3];
+            end
+        end
+        wheels = [length(prediction(prediction == 2)) length(prediction(prediction == 3))];
+        names = ["Class 2" "Class 3"];
+    
+        count = dictionary(names,wheels)
     end
 end
 
