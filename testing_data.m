@@ -220,5 +220,8 @@ elseif ismember('Task5', feature.Properties.VariableNames)
     scatter(samples, prediction, 50, 'red','filled');
     hold on;
     scatter(samples, label_array, 50, 'green','filled');
-   
+    hold on;
+    xlabel('sample')
+    ylabel('opening ratio')
+    legend('predicted', 'true')
 end
