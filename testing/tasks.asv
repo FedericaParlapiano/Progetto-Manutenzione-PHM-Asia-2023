@@ -136,7 +136,9 @@ correctPredictions = task4Actual' == task4Prediction.Var1;
 
 accuracy = sum(correctPredictions) / numel(task4Actual);
 disp(['Accuracy: ', num2str(accuracy * 100), '%']);
-classLabels = {'Other', 'BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7'};
+classLabels = {'Other', 'SV1', 'SV2', 'SV3', 'SV4'};
+C = confusionmat(task4Actual,task4Prediction.Var1);
+confusionchart(C, classLabels)
 
 
 

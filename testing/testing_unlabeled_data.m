@@ -87,7 +87,7 @@ import one_class_classification.*
             elseif countOfEight>=dueterzi
                 prediction = [prediction, 8];
             else
-                classes = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
+                count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
                 [M, I] = max(count);
                 prediction = [prediction, I];
     
