@@ -93,7 +93,7 @@ import one_class_classification.*
     
             end
         end
-        classes = []
+        classes = [];
     
     elseif ismember('Task4', testTable.Properties.VariableNames)
         for i = 1:numWindow:len-numWindow+1
@@ -115,7 +115,7 @@ import one_class_classification.*
                 prediction = [prediction, I];
             end
         end
-        classes = []
+        classes = [];
 
 
     elseif ismember('Task5', testTable.Properties.VariableNames)
@@ -138,7 +138,7 @@ import one_class_classification.*
                 prediction = [prediction, (I-1)*25];
             end
         end
-        classes = []
+        classes = [];
 
     end
 end
