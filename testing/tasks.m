@@ -5,6 +5,7 @@ import generate_function_task2_unknown.*
 import generate_function_task3.*
 import generate_function_task4.*
 import generate_function_task5.*
+import calculate_accuracy.*
 import task1.*
 load('classificatori/trainedModel1.mat')
 load('classificatori/unknown.mat')
@@ -29,7 +30,7 @@ answers = readtable(answers, 'VariableNamingRule', 'preserve');
 fprintf('Data classified as normal (class 0): %d \n', count1("Class 0"));
 fprintf('Data classified as abnormal (class 1): %d \n', count1("Class 1"));
 
-task1Actual = answers.task1'
+task1Actual = answers.task1';
 correctPredictions = task1Actual == prediction1;
 
 % Calculate accuracy
@@ -41,7 +42,11 @@ disp(['Accuracy: ', num2str(accuracy * 100), '%']);
 classLabels = {'Normal', 'Abnormal'};
 
 C = confusionmat(task1Actual,prediction1);
-confusionchart(C, classLabels)
+
+figure;
+confusionchart(C, classLabels);
+sgtitle(['Total Accuracy: ', num2str(accuracy * 100), ' %']);
+
 
 prediction1 = [answers.ID prediction1'];
 
@@ -59,6 +64,7 @@ fprintf('Data classified as unknown (class 1): %d \n', count2Unknown("Class 1"))
 
 testDataTask2 = renamevars(testDataTask2,["Var1"],["ID"]);
 prediction2Unknown = [testDataTask2(:,2) table(prediction2Unknown')];
+
 
 
 % task 2, bubble, valve
@@ -83,17 +89,28 @@ task2Actual = answers.task2';
 correctPredictions = task2Actual' == task2Prediction.Var1;
 
 % Calculate accuracy
-accuracy = sum(correctPredictions) / numel(task2Actual);
+accuracy2 = sum(correctPredictions) / numel(task2Actual);
 
 % Display accuracy
-disp(['Accuracy: ', num2str(accuracy * 100), '%']);
+disp(['Accuracy: ', num2str(accuracy2 * 100), '%']);
 
-classLabels = {'Normal', 'Unknown', 'Bubble Anomaly', 'Valve'};
+classLabels2 = {'Normal', 'Unknown', 'Bubble Anomaly', 'Valve'};
 
-C = confusionmat(task2Actual,task2Prediction.Var1);
-confusionchart(C, classLabels)
+C2 = confusionmat(task2Actual,task2Prediction.Var1);
 
+[accuracyTask2, confusionMatrixTask2, somma2] = calculate_accuracy(task2Actual', task2Prediction.Var1, {'Unknown', 'Bubble Anomaly', 'Valve'}, 0)
 
+figure;
+subplot(1, 2, 1);
+confusionchart(C2, classLabels2);
+title(['Confusion Matrix Submission Format: ', num2str(accuracy2*100), ' %']);
+
+% Create the second confusion matrix chart
+subplot(1, 2, 2);
+confusionchart(confusionMatrixTask2, {'Unknown', 'Bubble Anomaly', 'Valve'});
+title(['Confusion Matrix Task 2: ', num2str(accuracyTask2*100), ' %']);
+
+sgtitle(['Total Accuracy: ', num2str((somma2/height(prediction2Unknown))*100), ' %']);
 
 
 % task 3, bubble
@@ -112,22 +129,31 @@ task3Actual = answers.task3';
 correctPredictions = task3Actual' == task3Prediction.Var1;
 
 % Calculate accuracy
-accuracy = sum(correctPredictions) / numel(task3Actual);
+accuracy3 = sum(correctPredictions) / numel(task3Actual);
 
 % Display accuracy
-disp(['Accuracy: ', num2str(accuracy * 100), '%']);
+disp(['Accuracy: ', num2str(accuracy3 * 100), '%']);
 
-classLabels = {'Other', 'BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7'};
+classLabels3 = {'Other', 'BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7'};
+C3 = confusionmat(task3Actual,task3Prediction.Var1);
 
-C = confusionmat(task3Actual,task3Prediction.Var1);
-confusionchart(C, classLabels)
+[accuracyTask3, confusionMatrixTask3, somma3] = calculate_accuracy(task3Actual', task3Prediction.Var1, {'BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7'}, 0)
+
+figure;
+subplot(1, 2, 1);
+confusionchart(C3, classLabels3);
+title(['Confusion Matrix Submission Format: ', num2str(accuracy3*100), ' %']);
+
+% Create the second confusion matrix chart
+subplot(1, 2, 2);
+confusionchart(confusionMatrixTask3, {'BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7'});
+title(['Confusion Matrix Task 3: ', num2str(accuracyTask3*100), ' %']);
+
+sgtitle(['Total Accuracy: ', num2str(somma3/(height(prediction3))*100), ' %']);
+
 
 
 % task 4, valve
-
-
-
-
 testDataTask45 = testDataTask2(prediction2.Var1 == 3, :);
 [testFeatureTable4] = generate_function_task4(testDataTask45);
 [count4, prediction4] = testing_unlabeled_data(10, testFeatureTable4, trainedModel4);
@@ -138,12 +164,25 @@ task4Prediction.Var1(locTable1) = prediction4.Var1(locTable2);
 task4Actual = answers.task4';
 correctPredictions = task4Actual' == task4Prediction.Var1;
 
-accuracy = sum(correctPredictions) / numel(task4Actual);
-disp(['Accuracy: ', num2str(accuracy * 100), '%']);
-classLabels = {'Other', 'SV1', 'SV2', 'SV3', 'SV4'};
-C = confusionmat(task4Actual,task4Prediction.Var1);
-confusionchart(C, classLabels)
+accuracy4 = sum(correctPredictions) / numel(task4Actual);
+disp(['Accuracy: ', num2str(accuracy4 * 100), '%']);
+classLabels4 = {'Other', 'SV1', 'SV2', 'SV3', 'SV4'};
+C4 = confusionmat(task4Actual,task4Prediction.Var1);
 
+
+[accuracyTask4, confusionMatrixTask4, somma4] = calculate_accuracy(task4Actual', task4Prediction.Var1, {'SV1', 'SV2', 'SV3', 'SV4'}, 0)
+
+figure;
+subplot(1, 2, 1);
+confusionchart(C4, classLabels4)
+title(['Confusion Matrix Submission Format: ', num2str(accuracy4*100), ' %']);
+
+% Create the second confusion matrix chart
+subplot(1, 2, 2);
+confusionchart(confusionMatrixTask4, {'SV1', 'SV2', 'SV3', 'SV4'});
+title(['Confusion Matrix Task 4: ', num2str(accuracyTask4*100), ' %']);
+
+sgtitle(['Total Accuracy: ', num2str(somma4/(height(prediction4))*100), ' %']);
 
 
 
@@ -173,11 +212,25 @@ end
 
 correctPredictions = task5Actual' == task5Prediction.Var1;
 
-accuracy = sum(correctPredictions) / numel(task5Actual);
-disp(['Accuracy: ', num2str(accuracy * 100), '%']);
-classLabels = {'0', '25', '50', '75', '100'};
-C = confusionmat(task5Actual,task5Prediction.Var1);
-confusionchart(C, classLabels)
+accuracy5 = sum(correctPredictions) / numel(task5Actual);
+disp(['Accuracy: ', num2str(accuracy5 * 100), '%']);
+classLabels5 = {'0', '25', '50', '75', '100'};
+C5 = confusionmat(task5Actual,task5Prediction.Var1);
+
+[accuracyTask5, confusionMatrixTask5, somma5] = calculate_accuracy(task5Actual', task5Prediction.Var1, {'0', '25', '50', '75'}, 100)
+
+figure;
+subplot(1, 2, 1);
+confusionchart(C5, classLabels5);
+title(['Confusion Matrix Submission Format: ', num2str(accuracy5*100), ' %']);
+
+% Create the second confusion matrix chart
+subplot(1, 2, 2);
+confusionchart(confusionMatrixTask5, {'0', '25', '50', '75'});
+title(['Confusion Matrix Task 5: ', num2str(accuracyTask5*100), ' %']);
+
+sgtitle(['Total Accuracy: ', num2str(somma5/(height(prediction5))*100), ' %']);
+
 
 
 
