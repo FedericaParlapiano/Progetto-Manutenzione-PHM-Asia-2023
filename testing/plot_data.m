@@ -116,6 +116,7 @@ elseif task==4
     title('Plot dei dati');
     
     legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best');
+
 else
     figure;
     scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50,"green", 'filled');
@@ -136,6 +137,8 @@ else
     legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best')
 end
 
+fig_name = strcat('sep_task', num2str(task));
+saveas(gcf, strcat(fig_name, '.png'));
 
 
 
