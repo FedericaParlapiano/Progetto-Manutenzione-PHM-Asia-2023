@@ -13,7 +13,8 @@ FeatureArray = str2double(FeatureArray(:,[1 2 3 4 5]));
 group_by = FeatureArray(:,1);
 medie_per_caso = grpstats(FeatureArray(:, 3:5), group_by, {'mean'});
 
-plot_xyz = [medie_per_caso, prediction'];
+prediction = prediction.Var1;
+plot_xyz = [medie_per_caso, prediction];
 
 % feature da utilizzare per il colore dei punti nel plot
 gruppo = prediction;
@@ -73,17 +74,17 @@ elseif task==3
     hold on;
     scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'yellow', 'filled');
     hold on;
-    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'blue', 'filled');
     hold on;
-    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50, 'red', 'filled');
     hold on;
-    scatter3(x(gruppo == 5), y(gruppo == 5), z(gruppo == 5), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 5), y(gruppo == 5), z(gruppo == 5), 50, 'black', 'filled');
     hold on;
-    scatter3(x(gruppo == 6), y(gruppo == 6), z(gruppo == 6), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 6), y(gruppo == 6), z(gruppo == 6), 50, 'cyan', 'filled');
     hold on;
-    scatter3(x(gruppo == 7), y(gruppo == 7), z(gruppo == 7), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 7), y(gruppo == 7), z(gruppo == 7), 50, 'white', 'filled');
     hold on;
-    scatter3(x(gruppo == 8), y(gruppo == 8), z(gruppo == 8), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 8), y(gruppo == 8), z(gruppo == 8), 50, 'white', 'filled');
     hold on;
     scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'magenta', 'filled');
     hold off;
@@ -131,7 +132,7 @@ else
     zlabel(strrep (strrep(FeatureSelection.Properties.VariableNames{1,5}, "_", " "), "FRM 1/", " "));
     title('Plot dei dati');
     
-    legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best');
+    legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best')
 end
 
 
