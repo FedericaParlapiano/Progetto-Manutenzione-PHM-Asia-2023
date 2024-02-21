@@ -119,13 +119,13 @@ elseif task==4
 
 else
     figure;
-    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50,"green", 'filled');
+    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'green', 'filled');
     hold on;
-    scatter3(x(gruppo == 25), y(gruppo == 25), z(gruppo == 25), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 25), y(gruppo == 25), z(gruppo == 25), 50, 'blue', 'filled');
     hold on;
     scatter3(x(gruppo == 50), y(gruppo == 50), z(gruppo == 50), 50, 'yellow', 'filled');
     hold on;
-    scatter3(x(gruppo == 75), y(gruppo == 75), z(gruppo == 75), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 75), y(gruppo == 75), z(gruppo == 75), 50, 'cyan', 'filled');
     hold off;
     grid on;
     
@@ -134,7 +134,7 @@ else
     zlabel(strrep (strrep(FeatureSelection.Properties.VariableNames{1,5}, "_", " "), "FRM 1/", " "));
     title('Plot dei dati');
     
-    legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best')
+    legend('0', '25', '50', '75', 'Location','best')
 end
 
 fig_name = strcat('sep_task', num2str(task));
