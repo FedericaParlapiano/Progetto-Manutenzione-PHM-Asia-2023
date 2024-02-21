@@ -17,7 +17,7 @@ import one_class_classification.*
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfZeros = numWindow-countOfOnes;
-            if countOfOnes>=dueterzi
+            if countOfOnes>=9
                 prediction = [prediction, 1];
             else
                 prediction = [prediction, 0];
