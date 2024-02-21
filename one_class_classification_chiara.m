@@ -1,17 +1,14 @@
-function [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, noiseData, numWindow, maggioranza)
+function [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, numWindow, maggioranza)
     
     if ismember('Task2', trainTable.Properties.VariableNames)
         trainTable = removevars(trainTable,["Task2"]);
         testTable = removevars(testTable,["Task2"]);
-        noiseData = removevars(noiseData,["Task2"]);
     end
     if ismember('EnsembleID_', trainTable.Properties.VariableNames)
         trainTable = removevars(trainTable,["EnsembleID_"]);
         testTable = removevars(testTable,["EnsembleID_"]);
-        noiseData = removevars(noiseData,["EnsembleID_"]);
     end
 
-    testTable = [testTable; noiseData]
 
     % train the model
     [Mdl,~,s] = ocsvm(trainTable,StandardizeData=true,KernelScale="auto");

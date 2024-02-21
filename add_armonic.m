@@ -1,4 +1,4 @@
-import generatefunction_task2_128.*
+import generate_function_task2_unknown.*
 
 clc;
 fs = 0.001;
@@ -31,12 +31,9 @@ plot(t,noiseSignal.Case{i,1}.P1);
 hold on
 plot(t,v1+v3+v5);
 
-[featureTable,outputTable] = diagnosticFeatures(noiseSignal)
 
 
-
-
-[FeatureTable, x] = generatefunction_task2_128(noiseSignal);
+[FeatureTable, x] = generate_function_task2_unknown(noiseSignal);
 
 % dataFolder = 'dataset/train/data/';
 % files = dir(fullfile(dataFolder, '*.csv'));

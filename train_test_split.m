@@ -13,8 +13,8 @@ n_step = 1;
 num_split = 1;
 numWindow = 19;
 
-features = FeatureTable1_1;
-trainTable = FeatureTable1_1;
+features = FeatureTable1_2;
+trainTable = FeatureTable1_2;
 
 
 if ismember('Task1', features.Properties.VariableNames)

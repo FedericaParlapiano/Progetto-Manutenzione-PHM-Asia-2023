@@ -7,16 +7,17 @@ numWindow = 4;
 maggioranza = int32(numWindow/2);
 dueterzi = int32(numWindow*2/3);
 
-feature = FeatureTable1;
-% noiseData = FeatureTable1(721:820,:);
+feature = FeatureTableTrain;
+testTable = FeatureTableTest;
+trainTable = FeatureTableTrain;
+
 
 % [yfit,scores]=trainedModel1.predictFcn(testTable);
-yfit=trainedModel1.predictFcn(testTable);
-len = length(yfit);
+len = 100;
 
-%labels = testTable.Task2;
+labels = testTable.Task2;
 %labels = testTable.Task3;
-labels = testTable.Task5;
+%labels = testTable.Task5;
 %labels = testTable.Task4;
 
 label_array = [];
@@ -53,7 +54,7 @@ if ismember('Task1', feature.Properties.VariableNames)
     confusionchart(C, classLabels)
 
 elseif ismember('Task2', feature.Properties.VariableNames)
-    [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, noiseData, numWindow, maggioranza)
+    [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, numWindow, maggioranza)
     
     [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
 
