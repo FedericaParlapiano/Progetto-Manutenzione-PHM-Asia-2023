@@ -3,8 +3,8 @@ function plot_data(FeatureTable, prediction, task)
 FeatureSelection = FeatureTable(:, [1 2 5 6 7]);
 
 for i=1:height(FeatureSelection)
-    ensamble = strcat("Member ", num2str(i));
-    FeatureSelection.EnsembleID_(FeatureSelection.EnsembleID_==ensamble)=i;
+    ensemble = strcat("Member ", num2str(i));
+    FeatureSelection.EnsembleID_(FeatureSelection.EnsembleID_==ensemble)=i;
 end
 
 FeatureArray = table2array(FeatureSelection);
@@ -13,7 +13,8 @@ FeatureArray = str2double(FeatureArray(:,[1 2 3 4 5]));
 group_by = FeatureArray(:,1);
 medie_per_caso = grpstats(FeatureArray(:, 3:5), group_by, {'mean'});
 
-plot_xyz = [medie_per_caso, prediction'];
+prediction = prediction.Var1;
+plot_xyz = [medie_per_caso, prediction];
 
 % feature da utilizzare per il colore dei punti nel plot
 gruppo = prediction;
@@ -69,23 +70,24 @@ elseif task==2
 
 elseif task==3
     figure;
-    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50,"green", 'filled');
+    colororder("meadow")
+    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 5), y(gruppo == 5), z(gruppo == 5), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 5), y(gruppo == 5), z(gruppo == 5), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 6), y(gruppo == 6), z(gruppo == 6), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 6), y(gruppo == 6), z(gruppo == 6), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 7), y(gruppo == 7), z(gruppo == 7), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 7), y(gruppo == 7), z(gruppo == 7), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 8), y(gruppo == 8), z(gruppo == 8), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 8), y(gruppo == 8), z(gruppo == 8), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'magenta', 'filled');
+    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'filled');
     hold off;
     grid on;
     
@@ -98,13 +100,13 @@ elseif task==3
 
 elseif task==4
     figure;
-    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50,"green", 'filled');
+    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'green', 'filled');
     hold on;
     scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'yellow', 'filled');
     hold on;
-    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'cyan', 'filled');
     hold on;
-    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50, 'red', 'filled');
     hold off;
     grid on;
     
@@ -114,6 +116,7 @@ elseif task==4
     title('Plot dei dati');
     
     legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best');
+
 else
     figure;
     scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50,"green", 'filled');
@@ -131,9 +134,11 @@ else
     zlabel(strrep (strrep(FeatureSelection.Properties.VariableNames{1,5}, "_", " "), "FRM 1/", " "));
     title('Plot dei dati');
     
-    legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best');
+    legend('SV1', 'SV2', 'SV3', 'SV4', 'Location','best')
 end
 
+fig_name = strcat('sep_task', num2str(task));
+saveas(gcf, strcat(fig_name, '.png'));
 
 
 

@@ -1,6 +1,6 @@
 import one_class_classification_chiara.*
 % num windows frame policy 0.064s
-numWindow = 19;
+numWindow = 4;
 % num windows frame policy 0.128s
 % numWindow = 10;
 
@@ -213,7 +213,15 @@ elseif ismember('Task5', feature.Properties.VariableNames)
     % RMSE_mean = rmse(label_array, prediction);
     RMSE_median = rmse(label_array, prediction);
 
-    disp(['RMSE_mean: ', num2str(RMSE_mean)]);
+    % disp(['RMSE_mean: ', num2str(RMSE_mean)]);
     disp(['RMSE_median: ', num2str(RMSE_median)]);
-   
+
+    samples = [1:length(prediction)];
+    scatter(samples, prediction, 50, 'red','filled');
+    hold on;
+    scatter(samples, label_array, 50, 'green','filled');
+    hold on;
+    xlabel('sample')
+    ylabel('opening ratio')
+    legend('predicted', 'true')
 end
