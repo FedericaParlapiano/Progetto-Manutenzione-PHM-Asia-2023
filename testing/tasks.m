@@ -144,7 +144,7 @@ confusionchart(C, classLabels)
 
 
 % task 5, valve opening ratio
-[testFeatureTable5] = generate_function_task5(testDataTask45);
+[testFeatureTable5] = generate_function_task5(testDataTask45());
 [count5, prediction5] = testing_unlabeled_data(10, testFeatureTable5, trainedModel5);
 
 
