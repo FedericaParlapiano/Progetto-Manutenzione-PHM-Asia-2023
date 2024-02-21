@@ -124,6 +124,10 @@ confusionchart(C, classLabels)
 
 
 % task 4, valve
+
+
+
+
 testDataTask45 = testDataTask2(prediction2.Var1 == 3, :);
 [testFeatureTable4] = generate_function_task4(testDataTask45);
 [count4, prediction4] = testing_unlabeled_data(10, testFeatureTable4, trainedModel4);
@@ -144,8 +148,36 @@ confusionchart(C, classLabels)
 
 
 % task 5, valve opening ratio
-[testFeatureTable5] = generate_function_task5(testDataTask45);
+[testFeatureTable5] = generate_function_task5(testDataTask45(:,1));
 [count5, prediction5] = testing_unlabeled_data(10, testFeatureTable5, trainedModel5);
+prediction5 = [testDataTask45(:,2) table(prediction5')];
+index(:,2) = {100};
+task5Prediction = index;
+[commonIDs, locTable1, locTable2] = intersect(task5Prediction.ID, prediction5.ID);
+task5Prediction.Var1(locTable1) = prediction5.Var1(locTable2);
+task5Actual = answers.task5';
+
+
+for i = 1:length(task5Actual)
+    if task5Actual(1,i)~=100
+        remainder = mod(task5Actual(1,i), 25);
+        if remainder <= 12
+            roundingOffset = -remainder;
+        else
+            roundingOffset = 25 - remainder;
+        end
+        task5Actual(1,i) = task5Actual(1,i) + roundingOffset;
+        task5Actual(1,i) = max(0, min(task5Actual(1,i), 75));
+    end
+end
+
+correctPredictions = task5Actual' == task5Prediction.Var1;
+
+accuracy = sum(correctPredictions) / numel(task5Actual);
+disp(['Accuracy: ', num2str(accuracy * 100), '%']);
+classLabels = {'Other', '0', '25', '50', '75'};
+C = confusionmat(task5Actual,task5Prediction.Var1);
+confusionchart(C, classLabels)
 
 
 
