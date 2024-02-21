@@ -1,4 +1,4 @@
-function [count, prediction] = testing_unlabeled_data(numWindow, testTable, trainedModel)
+function [classes, prediction] = testing_unlabeled_data(numWindow, testTable, trainedModel)
 
 import one_class_classification.*
 
@@ -17,7 +17,7 @@ import one_class_classification.*
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfZeros = numWindow-countOfOnes;
-            if countOfOnes>=9
+            if countOfOnes>=dueterzi
                 prediction = [prediction, 1];
             else
                 prediction = [prediction, 0];
@@ -33,7 +33,7 @@ import one_class_classification.*
         wheels = [count_normal count_abnormal];
         names = ["Class 0" "Class 1"];
 
-        count = dictionary(names,wheels)
+        classes = dictionary(names,wheels)
 
     elseif (ismember('Task2', testTable.Properties.VariableNames) && class(trainedModel) == "OneClassSVM")
         [prediction] = one_class_classification(testTable, numWindow)
@@ -41,7 +41,7 @@ import one_class_classification.*
         wheels = [length(prediction(prediction == 0)) length(prediction(prediction == 1))];
         names = ["Class 0" "Class 1"];
     
-        count = dictionary(names,wheels)
+        classes = dictionary(names,wheels)
  
     elseif ismember('Task2', testTable.Properties.VariableNames)
         [yfit,scores]=trainedModel.predictFcn(testTable);
@@ -58,7 +58,7 @@ import one_class_classification.*
         wheels = [length(prediction(prediction == 2)) length(prediction(prediction == 3))];
         names = ["Class 2" "Class 3"];
     
-        count = dictionary(names,wheels)
+        classes = dictionary(names,wheels)
     
     elseif ismember('Task3', testTable.Properties.VariableNames)
         for i = 1:numWindow:len-numWindow+1
@@ -87,7 +87,7 @@ import one_class_classification.*
             elseif countOfEight>=dueterzi
                 prediction = [prediction, 8];
             else
-                count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
+                classes = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
                 [M, I] = max(count);
                 prediction = [prediction, I];
     

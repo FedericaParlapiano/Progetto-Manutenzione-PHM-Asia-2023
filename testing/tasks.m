@@ -103,7 +103,7 @@ testDataTask3 = testDataTask2(prediction2.Var1 == 2, :);
 prediction3 = [testDataTask3(:,2) table(prediction3')];
 index = prediction1;
 index(:,2) = {0};
-task3Prediction = index
+task3Prediction = index;
 [commonIDs, locTable1, locTable2] = intersect(task3Prediction.ID, prediction3.ID);
 task3Prediction.Var1(locTable1) = prediction3.Var1(locTable2);
 
@@ -127,6 +127,20 @@ confusionchart(C, classLabels)
 testDataTask45 = testDataTask2(prediction2.Var1 == 3, :);
 [testFeatureTable4] = generate_function_task4(testDataTask45);
 [count4, prediction4] = testing_unlabeled_data(10, testFeatureTable4, trainedModel4);
+prediction4 = [testDataTask45(:,2) table(prediction4')];
+task4Prediction = index;
+[commonIDs, locTable1, locTable2] = intersect(task4Prediction.ID, prediction4.ID);
+task4Prediction.Var1(locTable1) = prediction4.Var1(locTable2);
+task4Actual = answers.task4';
+correctPredictions = task4Actual' == task4Prediction.Var1;
+
+accuracy = sum(correctPredictions) / numel(task4Actual);
+disp(['Accuracy: ', num2str(accuracy * 100), '%']);
+classLabels = {'Other', 'SV1', 'SV2', 'SV3', 'SV4'};
+C = confusionmat(task4Actual,task4Prediction.Var1);
+confusionchart(C, classLabels)
+
+
 
 
 % task 5, valve opening ratio
