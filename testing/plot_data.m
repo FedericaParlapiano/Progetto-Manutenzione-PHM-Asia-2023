@@ -3,8 +3,8 @@ function plot_data(FeatureTable, prediction, task)
 FeatureSelection = FeatureTable(:, [1 2 5 6 7]);
 
 for i=1:height(FeatureSelection)
-    ensamble = strcat("Member ", num2str(i));
-    FeatureSelection.EnsembleID_(FeatureSelection.EnsembleID_==ensamble)=i;
+    ensemble = strcat("Member ", num2str(i));
+    FeatureSelection.EnsembleID_(FeatureSelection.EnsembleID_==ensemble)=i;
 end
 
 FeatureArray = table2array(FeatureSelection);
