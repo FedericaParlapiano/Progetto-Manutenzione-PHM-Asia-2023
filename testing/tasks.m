@@ -231,7 +231,7 @@ answers = readtable(answers, 'VariableNamingRule', 'preserve');
 % title(['Confusion Matrix Task 5: ', num2str(accuracyTask5*100), ' %']);
 % 
 % sgtitle(['Total Accuracy: ', num2str(somma5/(height(prediction5))*100), ' %']);
-% 
+
 
 % task 5, valve opening ratio
 [testFeatureTable5r] = generate_function_task5_regressione(testDataTask45(:,1));
@@ -257,7 +257,7 @@ for i = 1:length(task5Actualr)
  end
 
 % RMSE_mean = rmse(label_array, prediction);
-RMSE_median = rmse((answers.task5(locTable1))', prediction5r.Var1(locTable2));
+RMSE_median = rmse(answers.task5(locTable1), prediction5r.Var1(locTable2));
 
 % disp(['RMSE_mean: ', num2str(RMSE_mean)]);
 disp(['RMSE_median: ', num2str(RMSE_median)]);
