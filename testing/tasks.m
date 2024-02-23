@@ -3,7 +3,7 @@ import generate_function_task1.*
 import generate_function_task2.*
 import generate_function_task2_unknown.*
 import generate_function_task3.*
-import generate_function_task4.*
+import generate_function_task4_14_256.*
 import generate_function_task5.*
 import calculate_accuracy.*
 import task1.*
@@ -11,7 +11,6 @@ load('classificatori/trainedModel1.mat')
 load('classificatori/unknown.mat')
 load('classificatori/trainedModel2.mat')
 load('classificatori/trainedModel3.mat')
-load('classificatori/trainedModel4.mat')
 load('classificatori/trainedModel5.mat')
 
 
@@ -25,6 +24,7 @@ answers = readtable(answers, 'VariableNamingRule', 'preserve');
 % task 1
 [testDataTask1] = task1(testPath, "");
 [testFeatureTable1, x] = generate_function_task1(testDataTask1);
+
 
 [count1, prediction1] = testing_unlabeled_data(10, testFeatureTable1, trainedModel1);
 fprintf('Data classified as normal (class 0): %d \n', count1("Class 0"));
@@ -156,7 +156,7 @@ sgtitle(['Total Accuracy: ', num2str(somma3/(height(prediction3))*100), ' %']);
 % task 4, valve
 testDataTask45 = testDataTask2(prediction2.Var1 == 3, :);
 [testFeatureTable4] = generate_function_task4(testDataTask45);
-[count4, prediction4] = testing_unlabeled_data(10, testFeatureTable4, trainedModel4);
+[count4, prediction4] = testing_unlabeled_data(5, testFeatureTable4, trainedModel4);
 prediction4 = [testDataTask45(:,2) table(prediction4')];
 task4Prediction = index;
 [commonIDs, locTable1, locTable2] = intersect(task4Prediction.ID, prediction4.ID);
@@ -196,7 +196,7 @@ task5Prediction = index;
 task5Prediction.Var1(locTable1) = prediction5.Var1(locTable2);
 task5Actual = answers.task5';
 
-
+roundTo100 = 0;
 for i = 1:length(task5Actual)
     if task5Actual(1,i)~=100
         remainder = mod(task5Actual(1,i), 25);
@@ -207,6 +207,9 @@ for i = 1:length(task5Actual)
         end
         task5Actual(1,i) = task5Actual(1,i) + roundingOffset;
         task5Actual(1,i) = max(0, min(task5Actual(1,i), 75));
+        if task5Actual(1,i) == 100
+            roundTo100 = roundTo100 + 1;
+        end
     end
 end
 
@@ -230,18 +233,3 @@ confusionchart(confusionMatrixTask5, {'0', '25', '50', '75'});
 title(['Confusion Matrix Task 5: ', num2str(accuracyTask5*100), ' %']);
 
 sgtitle(['Total Accuracy: ', num2str(somma5/(height(prediction5))*100), ' %']);
-
-
-
-
-% [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
-% 
-%     for i = 1:numWindow:len-numWindow+1
-%         countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
-%         countOfThree = numWindow-countOfTwo;
-%         if countOfTwo>=dueterzi
-%             prediction = [prediction, 2];
-%         else
-%             prediction = [prediction, 3];
-%         end
-%     end

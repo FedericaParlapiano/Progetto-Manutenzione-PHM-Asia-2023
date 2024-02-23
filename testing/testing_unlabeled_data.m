@@ -4,7 +4,7 @@ import one_class_classification.*
 
     
     maggioranza = int32(numWindow/2);
-    dueterzi = int32(numWindow*2/3);
+    dueterzi = 8;
 
     if class(trainedModel) ~= "OneClassSVM"
         [yfit,scores]=trainedModel.predictFcn(testTable);
@@ -101,13 +101,13 @@ import one_class_classification.*
             countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
             countOfThree = sum(yfit(i:i+numWindow-1) == 3);
             countOfFour = sum(yfit(i:i+numWindow-1) == 4);
-            if countOfOnes>=dueterzi
+            if countOfOnes>=3
                 prediction = [prediction, 1];
-            elseif countOfTwos>=dueterzi
+            elseif countOfTwos>=3
                 prediction = [prediction, 2];
-            elseif countOfThree>=dueterzi
+            elseif countOfThree>=3
                 prediction = [prediction, 3];
-            elseif countOfFour>=dueterzi
+            elseif countOfFour>=3
                 prediction = [prediction, 4];
             else
                 count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
