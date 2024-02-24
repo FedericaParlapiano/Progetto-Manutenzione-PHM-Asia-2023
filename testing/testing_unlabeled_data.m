@@ -4,7 +4,7 @@ import one_class_classification.*
 
     
     maggioranza = int32(numWindow/2);
-    dueterzi = int32(numWindow*2/3);
+    dueterzi = int32(numWindow*2/3)+1;
 
     if class(trainedModel) ~= "OneClassSVM"
         if regressione==false
