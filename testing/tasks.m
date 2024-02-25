@@ -272,6 +272,8 @@ hold on;
 xlabel('sample')
 ylabel('opening ratio')
 legend('predicted', 'true')
+title(['Scatter plot Task 5']);
+subtitle(['RMSE: ', num2str(RMSE_median)])
 
 % [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
 % 
