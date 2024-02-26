@@ -1,4 +1,4 @@
-function plot_data(FeatureTable, prediction, task)
+function plot_data(FeatureTable, prediction, task, type)
 
 FeatureSelection = FeatureTable(:, [1 2 5 6 7]);
 
@@ -23,7 +23,22 @@ x = plot_xyz(:,1);
 y = plot_xyz(:,2);
 z = plot_xyz(:,3);
 
-if task==1
+if strcmp(type, 'actual')
+    figure;
+    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'red', 'filled');
+    hold on;
+    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'green', 'filled');
+    hold off;
+    grid on;
+    
+    xlabel(strrep (strrep(FeatureSelection.Properties.VariableNames{1,3}, "_", " "), "FRM 1/", " "));
+    ylabel(strrep (strrep(FeatureSelection.Properties.VariableNames{1,4}, "_", " "), "FRM 1/", " "));
+    zlabel(strrep (strrep(FeatureSelection.Properties.VariableNames{1,5}, "_", " "), "FRM 1/", " "));
+    title('Plot dei dati');
+    
+    legend('Wrong','Right', 'Location','best');
+
+elseif task==1
     figure;
     scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'yellow', 'filled');
     hold on;
