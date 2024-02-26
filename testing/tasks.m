@@ -16,7 +16,7 @@ load('classificatori/trainedModel2.mat')
 load('classificatori/trainedModel3.mat')
 load('classificatori/trainedModel4.mat')
 load('classificatori/trainedModel5.mat')
-load('regressori/trainedModel5regression13feature.mat')
+load('regressori/trainedModel5regressione.mat')
 
 
 
@@ -73,14 +73,16 @@ fprintf('Data classified as unknown (class 1): %d \n', count2Unknown("Class 1"))
 testDataTask2 = renamevars(testDataTask2,["Var1"],["ID"]);
 prediction2Unknown = [testDataTask2(:,2) table(prediction2Unknown')];
 
-% task2PredictionUnknown = array2table(prediction1);
-% task2PredictionUnknown = renamevars(task2PredictionUnknown,["prediction11", "prediction12"],["ID", "Var1"]);
-% [commonIDs, locTable1, locTable2] = intersect(task2PredictionUnknown.ID, prediction2Unknown.ID);
-% 
-% task2PredictionUnknown(~(ismember(task2PredictionUnknown.ID, commonIDs)), :) = [];
+task2PredictionUnknown = array2table([answers.ID, answers.task2]);
+task2PredictionUnknown = renamevars(task2PredictionUnknown,["Var1", "Var2"],["ID", "Task2"]);
+[commonIDs, ~, ~] = intersect(task2PredictionUnknown.ID, prediction2Unknown.ID);
+
+task2PredictionUnknown(~(ismember(task2PredictionUnknown.ID, commonIDs)), :) = [];
+idx = find(task2PredictionUnknown.Task2 ~= 1);
+task2PredictionUnknown.Task2(idx) = 0;
 
 plot_data(testFeatureTable2Unknown, prediction2Unknown.Var1, 'unknown');
-% plot_data(testFeatureTable2Unknown, task2PredictionUnknown.Var1, 'unknown');
+plot_data(testFeatureTable2Unknown, task2PredictionUnknown.Task2, 'unknown');
 
 
 % task 2, bubble, valve
