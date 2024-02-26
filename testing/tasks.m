@@ -16,6 +16,7 @@ load('classificatori/trainedModel2.mat')
 load('classificatori/trainedModel3.mat')
 load('classificatori/trainedModel4.mat')
 load('classificatori/trainedModel5.mat')
+load('regressori/trainedModel5regression13feature.mat')
 
 
 
@@ -30,8 +31,7 @@ answers = readtable(answers, 'VariableNamingRule', 'preserve');
 [testDataTask1] = task1(testPath, "");
 [testFeatureTable1, x] = generate_function_task1(testDataTask1);
 
-
-[count1, prediction1] = testing_unlabeled_data(10, testFeatureTable1, trainedModel1);
+[count1, prediction1] = testing_unlabeled_data(10, testFeatureTable1, trainedModel1, false);
 fprintf('Data classified as normal (class 0): %d \n', count1("Class 0"));
 fprintf('Data classified as abnormal (class 1): %d \n', count1("Class 1"));
 
@@ -65,7 +65,7 @@ testDataTask2 = [testDataTask1(prediction1(:,2)==1,:) table(prediction1(idx,1))]
 
 [testFeatureTable2Unknown] = generate_function_task2_unknown(testDataTask2(:,1));
 
-[count2Unknown, prediction2Unknown] = testing_unlabeled_data(10, testFeatureTable2Unknown, Mdl);
+[count2Unknown, prediction2Unknown] = testing_unlabeled_data(10, testFeatureTable2Unknown, Mdl, false);
 fprintf('Data classified as not unknown (class 0): %d \n', count2Unknown("Class 0"));
 fprintf('Data classified as unknown (class 1): %d \n', count2Unknown("Class 1"));
 
@@ -87,7 +87,7 @@ plot_data(testFeatureTable2Unknown, prediction2Unknown.Var1, 'unknown');
 idx = table2array(prediction2Unknown(:,2))==0;
 testDataTask2 = [testDataTask2(idx,1) prediction2Unknown(idx,1)];
 [testFeatureTable2] = generate_function_task2(testDataTask2(:,1));
-[count2, prediction2] = testing_unlabeled_data(10, testFeatureTable2, trainedModel2);
+[count2, prediction2] = testing_unlabeled_data(10, testFeatureTable2, trainedModel2, false);
 fprintf('Data classified as bubble anomaly (class 2): %d \n', count2("Class 2"));
 fprintf('Data classified as valve fault (class 3): %d \n', count2("Class 3"));
 
@@ -139,7 +139,7 @@ plot_data(testFeatureTable2, actual2(actual2~=1), 2);
 % task 3, bubble
 testDataTask3 = testDataTask2(prediction2.Var1 == 2, :);
 [testFeatureTable3] = generate_function_task3(testDataTask3(:,1));
-[count3, prediction3] = testing_unlabeled_data(10, testFeatureTable3, trainedModel3);
+[count3, prediction3] = testing_unlabeled_data(10, testFeatureTable3, trainedModel3, false);
 prediction3 = [testDataTask3(:,2) table(prediction3')];
 index = prediction1;
 index(:,2) = {0};
@@ -180,7 +180,7 @@ plot_data(testFeatureTable3,  table3(:,1), 3);
 % task 4, valve
 testDataTask45 = testDataTask2(prediction2.Var1 == 3, :);
 [testFeatureTable4] = generate_function_task4(testDataTask45);
-[count4, prediction4] = testing_unlabeled_data(5, testFeatureTable4, trainedModel4);
+[count4, prediction4] = testing_unlabeled_data(5, testFeatureTable4, trainedModel4, false);
 prediction4 = [testDataTask45(:,2) table(prediction4')];
 task4Prediction = index;
 [commonIDs, locTable1, locTable2] = intersect(task4Prediction.ID, prediction4.ID);
@@ -214,7 +214,7 @@ plot_data(testFeatureTable4,  table4(:,1), 4);
 
 % task 5, valve opening ratio
 [testFeatureTable5] = generate_function_task5(testDataTask45(:,1));
-[count5, prediction5] = testing_unlabeled_data(10, testFeatureTable5, trainedModel5);
+[count5, prediction5] = testing_unlabeled_data(10, testFeatureTable5, trainedModel5, false);
 prediction5 = [testDataTask45(:,2) table(prediction5')];
 index(:,2) = {100};
 task5Prediction = index;
@@ -222,7 +222,7 @@ task5Prediction = index;
 task5Prediction.Var1(locTable1) = prediction5.Var1(locTable2);
 task5Actual = answers.task5';
 
-roundTo100 = 0;
+
 for i = 1:length(task5Actual)
     if task5Actual(1,i)~=100
         remainder = mod(task5Actual(1,i), 25);
@@ -233,9 +233,6 @@ for i = 1:length(task5Actual)
         end
         task5Actual(1,i) = task5Actual(1,i) + roundingOffset;
         task5Actual(1,i) = max(0, min(task5Actual(1,i), 75));
-        if task5Actual(1,i) == 100
-            roundTo100 = roundTo100 + 1;
-        end
     end
 end
 
@@ -262,3 +259,58 @@ sgtitle(['Total Accuracy: ', num2str(somma5/(height(prediction5))*100), ' %']);
 
 plot_data(testFeatureTable5, prediction5.Var1, 5);
 plot_data(testFeatureTable5,  table5(:,1), 5);
+
+
+
+% task 5, valve opening ratio
+[testFeatureTable5r] = generate_function_task5_regressione13feature(testDataTask45(:,1));
+[count5r, prediction5r] = testing_unlabeled_data(10, testFeatureTable5r, trainedModel5regression13feature, true);
+prediction5r = [testDataTask45(:,2) table(prediction5r')];
+index(:,2) = {100};
+task5Predictionr = index;
+[commonIDs, locTable1, locTable2] = intersect(task5Predictionr.ID, prediction5r.ID);
+task5Predictionr.Var1(locTable1) = prediction5r.Var1(locTable2);
+task5Actualr = answers.task5';
+
+for i = 1:length(task5Actualr)
+     if task5Actualr(1,i)~=100
+         remainder = mod(task5Actualr(1,i), 25);
+         if remainder <= 12
+             roundingOffset = -remainder;
+         else
+             roundingOffset = 25 - remainder;
+         end
+         task5Actualr(1,i) = task5Actualr(1,i) + roundingOffset;
+         task5Actualr(1,i) = max(0, min(task5Actualr(1,i), 75));
+     end
+ end
+
+% RMSE_mean = rmse(label_array, prediction);
+RMSE_median = rmse(answers.task5(locTable1), prediction5r.Var1(locTable2));
+
+% disp(['RMSE_mean: ', num2str(RMSE_mean)]);
+disp(['RMSE_median: ', num2str(RMSE_median)]);
+
+figure;
+samples = [1:length(prediction5r.Var1(locTable2))];
+scatter(samples, prediction5r.Var1(locTable2), 50, 'red','filled');
+hold on;
+scatter(samples, (answers.task5(locTable1))', 50, 'green','filled');
+hold on;
+xlabel('sample')
+ylabel('opening ratio')
+legend('predicted', 'true')
+title(['Scatter plot Task 5']);
+subtitle(['RMSE: ', num2str(RMSE_median)])
+
+% [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
+% 
+%     for i = 1:numWindow:len-numWindow+1
+%         countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
+%         countOfThree = numWindow-countOfTwo;
+%         if countOfTwo>=dueterzi
+%             prediction = [prediction, 2];
+%         else
+%             prediction = [prediction, 3];
+%         end
+%     end
