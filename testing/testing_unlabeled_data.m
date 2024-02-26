@@ -4,7 +4,7 @@ import one_class_classification.*
 
     
     maggioranza = int32(numWindow/2);
-    dueterzi = 8;
+    dueterzi = int32(3*numWindow/2);
 
     if class(trainedModel) ~= "OneClassSVM"
         [yfit,scores]=trainedModel.predictFcn(testTable);
@@ -14,6 +14,7 @@ import one_class_classification.*
     end
     
     if ismember('Task1', testTable.Properties.VariableNames)
+        dueterzi = 8;
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfZeros = numWindow-countOfOnes;
@@ -41,9 +42,10 @@ import one_class_classification.*
         wheels = [length(prediction(prediction == 0)) length(prediction(prediction == 1))];
         names = ["Class 0" "Class 1"];
     
-        classes = dictionary(names,wheels)
+        classes = dictionary(names,wheels);
  
     elseif ismember('Task2', testTable.Properties.VariableNames)
+        dueterzi = 8;
         [yfit,scores]=trainedModel.predictFcn(testTable);
 
         for i = 1:numWindow:len-numWindow+1
@@ -58,9 +60,10 @@ import one_class_classification.*
         wheels = [length(prediction(prediction == 2)) length(prediction(prediction == 3))];
         names = ["Class 2" "Class 3"];
     
-        classes = dictionary(names,wheels)
+        classes = dictionary(names,wheels);
     
     elseif ismember('Task3', testTable.Properties.VariableNames)
+        dueterzi = 8;
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
@@ -101,13 +104,13 @@ import one_class_classification.*
             countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
             countOfThree = sum(yfit(i:i+numWindow-1) == 3);
             countOfFour = sum(yfit(i:i+numWindow-1) == 4);
-            if countOfOnes>=3
+            if countOfOnes>=dueterzi
                 prediction = [prediction, 1];
-            elseif countOfTwos>=3
+            elseif countOfTwos>=dueterzi
                 prediction = [prediction, 2];
-            elseif countOfThree>=3
+            elseif countOfThree>=dueterzi
                 prediction = [prediction, 3];
-            elseif countOfFour>=3
+            elseif countOfFour>=dueterzi
                 prediction = [prediction, 4];
             else
                 count = [countOfOnes; countOfTwos; countOfThree; countOfFour];

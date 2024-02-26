@@ -13,7 +13,7 @@ FeatureArray = str2double(FeatureArray(:,[1 2 3 4 5]));
 group_by = FeatureArray(:,1);
 medie_per_caso = grpstats(FeatureArray(:, 3:5), group_by, {'mean'});
 
-prediction = prediction.Var1;
+prediction = prediction;
 plot_xyz = [medie_per_caso, prediction];
 
 % feature da utilizzare per il colore dei punti nel plot
@@ -51,7 +51,7 @@ elseif strcmp(task,'unknown')
     zlabel(strrep (strrep(FeatureSelection.Properties.VariableNames{1,5}, "_", " "), "FRM 1/", " "));
     title('Plot dei dati');
     
-    legend('Classe 0', 'Classe 1', 'Location', 'best');
+    legend('Known', 'Unknown', 'Location', 'best');
 
 elseif task==2
     figure;
