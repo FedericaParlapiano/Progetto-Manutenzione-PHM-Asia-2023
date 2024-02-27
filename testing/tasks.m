@@ -1,3 +1,7 @@
+addpath('feature\');
+addpath('evaluation\');
+
+
 import testing_unlabeled_data.*
 import generate_function_task1.*
 import generate_function_task2.*
@@ -5,11 +9,10 @@ import generate_function_task2_unknown.*
 import generate_function_task3.*
 import generate_function_task4.*
 import generate_function_task5.*
-
 import plot_data.*
-
 import calculate_accuracy.*
 import task1.*
+
 load('classificatori/trainedModel1.mat')
 load('classificatori/unknown.mat')
 load('classificatori/trainedModel2.mat')
@@ -17,7 +20,6 @@ load('classificatori/trainedModel3.mat')
 load('classificatori/trainedModel4.mat')
 load('classificatori/trainedModel5.mat')
 load('regressori/trainedModel5regressione.mat')
-
 
 
 trainPath = '../dataset/train/data/';
