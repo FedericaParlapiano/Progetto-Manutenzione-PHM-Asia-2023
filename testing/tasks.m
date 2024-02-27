@@ -19,126 +19,132 @@ load('classificatori/trainedModel5.mat')
 load('regressori/trainedModel5regressione.mat')
 
 
-% 
-% trainPath = '../dataset/train/data/';
-% labelsPath = '../dataset/train/labels.xlsx';
-% testPath = '../dataset/test/data/';
-% answers = 'answer.csv';
-% answers = readtable(answers, 'VariableNamingRule', 'preserve');
-% 
-% 
-% % task 1
-% [testDataTask1] = task1(testPath, "");
-% [testFeatureTable1, x] = generate_function_task1(testDataTask1);
-% 
-% [count1, prediction1] = testing_unlabeled_data(10, testFeatureTable1, trainedModel1, false);
-% fprintf('Data classified as normal (class 0): %d \n', count1("Class 0"));
-% fprintf('Data classified as abnormal (class 1): %d \n', count1("Class 1"));
-% 
-% task1Actual = answers.task1';
-% correctPredictions = task1Actual == prediction1;
-% 
-% % Calculate accuracy
-% accuracy = sum(correctPredictions) / numel(task1Actual);
-% 
-% % Display accuracy
-% disp(['Accuracy: ', num2str(accuracy * 100), '%']);
-% 
-% classLabels = {'Normal', 'Abnormal'};
-% 
-% C = confusionmat(task1Actual,prediction1);
-% 
-% figure;
-% confusionchart(C, classLabels);
-% sgtitle(['Total Accuracy: ', num2str(accuracy * 100), ' %']);
-% 
-% prediction1 = [answers.ID prediction1'];
-% 
-% 
-% plot_data(testFeatureTable1, prediction1(:,2), 1, '');
-% confronti = (prediction1(:,2)==task1Actual');
-% plot_data(testFeatureTable1, confronti, 1, 'actual');
-% 
-% 
-% % task 2, unknown data
-% idx = prediction1(:,2)==1;
-% testDataTask2 = [testDataTask1(prediction1(:,2)==1,:) table(prediction1(idx,1))];
-% 
-% [testFeatureTable2Unknown] = generate_function_task2_unknown(testDataTask2(:,1));
-% 
-% [count2Unknown, prediction2Unknown] = testing_unlabeled_data(10, testFeatureTable2Unknown, Mdl, false);
-% fprintf('Data classified as not unknown (class 0): %d \n', count2Unknown("Class 0"));
-% fprintf('Data classified as unknown (class 1): %d \n', count2Unknown("Class 1"));
-% 
-% 
-% testDataTask2 = renamevars(testDataTask2,["Var1"],["ID"]);
-% prediction2Unknown = [testDataTask2(:,2) table(prediction2Unknown')];
-% 
-% task2ActualUnknown = array2table([answers.ID, answers.task2]);
-% task2ActualUnknown = renamevars(task2ActualUnknown,["Var1", "Var2"],["ID", "Task2"]);
-% [commonIDs, ~, ~] = intersect(task2ActualUnknown.ID, prediction2Unknown.ID);
-% 
-% task2ActualUnknown(~(ismember(task2ActualUnknown.ID, commonIDs)), :) = [];
-% idx = find(task2ActualUnknown.Task2 ~= 1);
-% task2ActualUnknown.Task2(idx) = 0;
-% 
-% plot_data(testFeatureTable2Unknown, prediction2Unknown.Var1, 'unknown', '');
-% confronti = (task2ActualUnknown.Task2==task2PredictionUnknown.Task2);
-% plot_data(testFeatureTable2Unknown, confronti, 'unknown', 'actual');
-% 
-% 
-% % task 2, bubble, valve
-% idx = table2array(prediction2Unknown(:,2))==0;
-% testDataTask2 = [testDataTask2(idx,1) prediction2Unknown(idx,1)];
-% [testFeatureTable2] = generate_function_task2(testDataTask2(:,1));
-% [count2, prediction2] = testing_unlabeled_data(10, testFeatureTable2, trainedModel2, false);
-% fprintf('Data classified as bubble anomaly (class 2): %d \n', count2("Class 2"));
-% fprintf('Data classified as valve fault (class 3): %d \n', count2("Class 3"));
-% 
-% prediction2 = [testDataTask2(:,2) table(prediction2')];
-% prediction1 = array2table(prediction1);
-% prediction1 = renamevars(prediction1,["prediction11", "prediction12"],["ID", "Var1"]);
-% 
-% task2Prediction = prediction1;
-% 
-% [commonIDs, locTable1, locTable2] = intersect(task2Prediction.ID, prediction2.ID);
-% task2Prediction.Var1(locTable1) = prediction2.Var1(locTable2);
-% 
-% task2Actual = answers.task2';
-% 
-% correctPredictions = task2Actual' == task2Prediction.Var1;
-% 
-% % Calculate accuracy
-% accuracy2 = sum(correctPredictions) / numel(task2Actual);
-% 
-% % Display accuracy
-% disp(['Accuracy: ', num2str(accuracy2 * 100), '%']);
-% 
-% classLabels2 = {'Normal', 'Unknown', 'Bubble Anomaly', 'Valve'};
-% 
-% C2 = confusionmat(task2Actual,task2Prediction.Var1);
-% 
-% [accuracyTask2, confusionMatrixTask2, somma2, table2] = calculate_accuracy(task2Actual', task2Prediction.Var1, {'Unknown', 'Bubble Anomaly', 'Valve'}, 0);
-% 
-% figure;
-% subplot(1, 2, 1);
-% confusionchart(C2, classLabels2);
-% title(['Confusion Matrix Submission Format: ', num2str(accuracy2*100), ' %']);
-% 
-% % Create the second confusion matrix chart
-% subplot(1, 2, 2);
-% confusionchart(confusionMatrixTask2, {'Unknown', 'Bubble Anomaly', 'Valve'});
-% title(['Confusion Matrix Task 2: ', num2str(accuracyTask2*100), ' %']);
-% 
-% sgtitle(['Total Accuracy: ', num2str((somma2/height(prediction2Unknown))*100), ' %']);
-% 
-% 
-% plot_data(testFeatureTable2, prediction2.Var1, 2, '');
-% actual2 = array2table(table2);
-% actual2 = actual2(actual2.table21~=1, :);
-% confronti = (actual2.table21==actual2.table22);
-% plot_data(testFeatureTable2, confronti, 2, 'actual');
-% 
+
+trainPath = '../dataset/train/data/';
+labelsPath = '../dataset/train/labels.xlsx';
+testPath = '../dataset/test/data/';
+answers = 'answer.csv';
+answers = readtable(answers, 'VariableNamingRule', 'preserve');
+
+
+% task 1
+[testDataTask1] = task1(testPath, "");
+[testFeatureTable1, x] = generate_function_task1(testDataTask1);
+
+[count1, prediction1] = testing_unlabeled_data(10, testFeatureTable1, trainedModel1, false);
+fprintf('Data classified as normal (class 0): %d \n', count1("Class 0"));
+fprintf('Data classified as abnormal (class 1): %d \n', count1("Class 1"));
+
+task1Actual = answers.task1';
+correctPredictions = task1Actual == prediction1;
+
+% Calculate accuracy
+accuracy = sum(correctPredictions) / numel(task1Actual);
+
+% Display accuracy
+disp(['Accuracy: ', num2str(accuracy * 100), '%']);
+
+classLabels = {'Normal', 'Abnormal'};
+
+C = confusionmat(task1Actual,prediction1);
+
+figure;
+confusionchart(C, classLabels);
+sgtitle(['Total Accuracy: ', num2str(accuracy * 100), ' %']);
+fig_name = 'image/confusionchart_task1';
+saveas(gcf, strcat(fig_name, '.png'));
+
+prediction1 = [answers.ID prediction1'];
+
+
+plot_data(testFeatureTable1, prediction1(:,2), 1, '');
+confronti = (prediction1(:,2)==task1Actual');
+plot_data(testFeatureTable1, confronti, 1, 'actual');
+
+
+% task 2, unknown data
+idx = prediction1(:,2)==1;
+testDataTask2 = [testDataTask1(prediction1(:,2)==1,:) table(prediction1(idx,1))];
+
+[testFeatureTable2Unknown] = generate_function_task2_unknown(testDataTask2(:,1));
+
+[count2Unknown, prediction2Unknown] = testing_unlabeled_data(10, testFeatureTable2Unknown, Mdl, false);
+fprintf('Data classified as not unknown (class 0): %d \n', count2Unknown("Class 0"));
+fprintf('Data classified as unknown (class 1): %d \n', count2Unknown("Class 1"));
+
+
+testDataTask2 = renamevars(testDataTask2,["Var1"],["ID"]);
+prediction2Unknown = [testDataTask2(:,2) table(prediction2Unknown')];
+
+task2ActualUnknown = array2table([answers.ID, answers.task2]);
+task2ActualUnknown = renamevars(task2ActualUnknown,["Var1", "Var2"],["ID", "Task2"]);
+[commonIDs, ~, ~] = intersect(task2ActualUnknown.ID, prediction2Unknown.ID);
+
+task2ActualUnknown(~(ismember(task2ActualUnknown.ID, commonIDs)), :) = [];
+idx = find(task2ActualUnknown.Task2 ~= 1);
+task2ActualUnknown.Task2(idx) = 0;
+
+plot_data(testFeatureTable2Unknown, prediction2Unknown.Var1, 'unknown', '');
+confronti = (task2ActualUnknown.Task2==prediction2Unknown.Var1);
+plot_data(testFeatureTable2Unknown, confronti, 'unknown', 'actual');
+
+
+% task 2, bubble, valve
+idx = table2array(prediction2Unknown(:,2))==0;
+testDataTask2 = [testDataTask2(idx,1) prediction2Unknown(idx,1)];
+[testFeatureTable2] = generate_function_task2(testDataTask2(:,1));
+[count2, prediction2] = testing_unlabeled_data(10, testFeatureTable2, trainedModel2, false);
+fprintf('Data classified as bubble anomaly (class 2): %d \n', count2("Class 2"));
+fprintf('Data classified as valve fault (class 3): %d \n', count2("Class 3"));
+
+prediction2 = [testDataTask2(:,2) table(prediction2')];
+prediction1 = array2table(prediction1);
+prediction1 = renamevars(prediction1,["prediction11", "prediction12"],["ID", "Var1"]);
+
+task2Prediction = prediction1;
+
+[commonIDs, locTable1, locTable2] = intersect(task2Prediction.ID, prediction2.ID);
+task2Prediction.Var1(locTable1) = prediction2.Var1(locTable2);
+
+task2Actual = answers.task2';
+
+correctPredictions = task2Actual' == task2Prediction.Var1;
+
+% Calculate accuracy
+accuracy2 = sum(correctPredictions) / numel(task2Actual);
+
+% Display accuracy
+disp(['Accuracy: ', num2str(accuracy2 * 100), '%']);
+
+classLabels2 = {'Normal', 'Unknown', 'Bubble Anomaly', 'Valve'};
+
+C2 = confusionmat(task2Actual,task2Prediction.Var1);
+
+[accuracyTask2, confusionMatrixTask2, somma2, table2] = calculate_accuracy(task2Actual', task2Prediction.Var1, {'Unknown', 'Bubble Anomaly', 'Valve'}, 0);
+
+figure;
+subplot(1, 2, 1);
+confusionchart(C2, classLabels2);
+title(['Confusion Matrix Submission Format: ', num2str(accuracy2*100), ' %']);
+
+% Create the second confusion matrix chart
+subplot(1, 2, 2);
+confusionchart(confusionMatrixTask2, {'Unknown', 'Bubble Anomaly', 'Valve'});
+title(['Confusion Matrix Task 2: ', num2str(accuracyTask2*100), ' %']);
+
+sgtitle(['Total Accuracy: ', num2str((somma2/height(prediction2Unknown))*100), ' %']);
+
+fig_name = 'image/confusionchart_task2';
+saveas(gcf, strcat(fig_name, '.png'));
+
+
+
+plot_data(testFeatureTable2, prediction2.Var1, 2, '');
+actual2 = array2table(table2);
+actual2 = actual2(actual2.table21~=1, :);
+confronti = (actual2.table21==actual2.table22);
+plot_data(testFeatureTable2, confronti, 2, 'actual');
+
 
 
 % task 3, bubble
@@ -179,6 +185,9 @@ title(['Confusion Matrix Task 3: ', num2str(accuracyTask3*100), ' %']);
 
 sgtitle(['Total Accuracy: ', num2str(somma3/(height(prediction3))*100), ' %']);
 
+fig_name = 'image/confusionchart_task3';
+saveas(gcf, strcat(fig_name, '.png'));
+
 plot_data(testFeatureTable3, prediction3.Var1, 3, '');
 
 actual3 = array2table(table3);
@@ -215,6 +224,10 @@ confusionchart(confusionMatrixTask4, {'SV1', 'SV2', 'SV3', 'SV4'});
 title(['Confusion Matrix Task 4: ', num2str(accuracyTask4*100), ' %']);
 
 sgtitle(['Total Accuracy: ', num2str(somma4/(height(prediction4))*100), ' %']);
+
+fig_name = 'image/confusionchart_task4';
+saveas(gcf, strcat(fig_name, '.png'));
+
 
 plot_data(testFeatureTable4, prediction4.Var1, 4, '');
 actual4 = array2table(table4);
@@ -267,6 +280,8 @@ title(['Confusion Matrix Task 5: ', num2str(accuracyTask5*100), ' %']);
 
 sgtitle(['Total Accuracy: ', num2str(somma5/(height(prediction5))*100), ' %']);
 
+fig_name = 'image/confusionchart_task5';
+saveas(gcf, strcat(fig_name, '.png'));
 
 plot_data(testFeatureTable5, prediction5.Var1, 5,'');
 actual5 = array2table(table5);
