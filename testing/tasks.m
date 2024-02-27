@@ -51,7 +51,9 @@ C = confusionmat(task1Actual,prediction1);
 figure;
 confusionchart(C, classLabels);
 sgtitle(['Total Accuracy: ', num2str(accuracy * 100), ' %']);
+
 fig_name = 'image/confusionchart_task1';
+set(gcf, 'Position', [150, 150, 600, 500])
 saveas(gcf, strcat(fig_name, '.png'));
 
 prediction1 = [answers.ID prediction1'];
@@ -135,6 +137,7 @@ title(['Confusion Matrix Task 2: ', num2str(accuracyTask2*100), ' %']);
 sgtitle(['Total Accuracy: ', num2str((somma2/height(prediction2Unknown))*100), ' %']);
 
 fig_name = 'image/confusionchart_task2';
+set(gcf, 'Position', [150, 150, 1000, 500])
 saveas(gcf, strcat(fig_name, '.png'));
 
 
@@ -186,6 +189,7 @@ title(['Confusion Matrix Task 3: ', num2str(accuracyTask3*100), ' %']);
 sgtitle(['Total Accuracy: ', num2str(somma3/(height(prediction3))*100), ' %']);
 
 fig_name = 'image/confusionchart_task3';
+set(gcf, 'Position', [150, 150, 1000, 500])
 saveas(gcf, strcat(fig_name, '.png'));
 
 plot_data(testFeatureTable3, prediction3.Var1, 3, '');
@@ -226,6 +230,7 @@ title(['Confusion Matrix Task 4: ', num2str(accuracyTask4*100), ' %']);
 sgtitle(['Total Accuracy: ', num2str(somma4/(height(prediction4))*100), ' %']);
 
 fig_name = 'image/confusionchart_task4';
+set(gcf, 'Position', [150, 150, 1000, 500])
 saveas(gcf, strcat(fig_name, '.png'));
 
 
@@ -281,6 +286,7 @@ title(['Confusion Matrix Task 5: ', num2str(accuracyTask5*100), ' %']);
 sgtitle(['Total Accuracy: ', num2str(somma5/(height(prediction5))*100), ' %']);
 
 fig_name = 'image/confusionchart_task5';
+set(gcf, 'Position', [150, 150, 1000, 500])
 saveas(gcf, strcat(fig_name, '.png'));
 
 plot_data(testFeatureTable5, prediction5.Var1, 5,'');
