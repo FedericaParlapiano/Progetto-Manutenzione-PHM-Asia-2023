@@ -27,7 +27,7 @@ answers = 'answer.csv';
 answers = readtable(answers, 'VariableNamingRule', 'preserve');
 
 
-%% task 1
+%% task 1, normal & abnormal data
 [testDataTask1] = task1(testPath, "");
 [testFeatureTable1, x] = generate_function_task1(testDataTask1);
 
