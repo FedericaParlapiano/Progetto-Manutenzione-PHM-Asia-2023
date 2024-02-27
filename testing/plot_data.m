@@ -1,5 +1,16 @@
 function plot_data(FeatureTable, prediction, task, type)
 
+newcolors = [
+    1.00 0.65 0.00  % Arancione
+    1.00 1.00 0.00  % Giallo
+    0.50 0.00 1.00  % Viola
+    1.00 0.00 1.00  % Magenta
+    1.00 0.00 0.50  % Rosa
+    0.00 0.50 1.00  % Azzurro
+    0.00 1.00 1.00  % Ciano
+    0.00 0.50 0.50  % Verde acqua
+];
+
 FeatureSelection = FeatureTable(:, [1 2 5 6 7]);
 
 for i=1:height(FeatureSelection)
@@ -40,9 +51,10 @@ if strcmp(type, 'actual')
 
 elseif task==1
     figure;
-    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'yellow', 'filled');
+    colororder(newcolors);
+    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'magenta', 'filled');
+    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'filled');
     hold off;
     grid on;
     
@@ -55,9 +67,10 @@ elseif task==1
 
 elseif strcmp(task,'unknown')
     figure;
-    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'yellow', 'filled');
+    colororder(newcolors(end-1:end, :));
+    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'magenta', 'filled');
+    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'filled');
     hold off;
     grid on;
     
@@ -70,9 +83,10 @@ elseif strcmp(task,'unknown')
 
 elseif task==2
     figure;
-    scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'yellow', 'filled');
+    colororder(newcolors(end-4:end-2, :));
+    scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'magenta', 'filled');
+    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'filled');
     hold off;
     grid on;
     
@@ -85,7 +99,7 @@ elseif task==2
 
 elseif task==3
     figure;
-    colororder("meadow")
+    colororder(newcolors);
     scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'filled');
     hold on;
     scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'filled');
@@ -101,8 +115,6 @@ elseif task==3
     scatter3(x(gruppo == 7), y(gruppo == 7), z(gruppo == 7), 50, 'filled');
     hold on;
     scatter3(x(gruppo == 8), y(gruppo == 8), z(gruppo == 8), 50, 'filled');
-    hold on;
-    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'filled');
     hold off;
     grid on;
     
@@ -115,13 +127,14 @@ elseif task==3
 
 elseif task==4
     figure;
-    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'green', 'filled');
+    colororder(newcolors);
+    scatter3(x(gruppo == 1), y(gruppo == 1), z(gruppo == 1), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 2), y(gruppo == 2), z(gruppo == 2), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'cyan', 'filled');
+    scatter3(x(gruppo == 3), y(gruppo == 3), z(gruppo == 3), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50, 'red', 'filled');
+    scatter3(x(gruppo == 4), y(gruppo == 4), z(gruppo == 4), 50,'filled');
     hold off;
     grid on;
     
@@ -134,13 +147,14 @@ elseif task==4
 
 else
     figure;
-    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'green', 'filled');
+    colororder(newcolors);
+    scatter3(x(gruppo == 0), y(gruppo == 0), z(gruppo == 0), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 25), y(gruppo == 25), z(gruppo == 25), 50, 'blue', 'filled');
+    scatter3(x(gruppo == 25), y(gruppo == 25), z(gruppo == 25), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 50), y(gruppo == 50), z(gruppo == 50), 50, 'yellow', 'filled');
+    scatter3(x(gruppo == 50), y(gruppo == 50), z(gruppo == 50), 50, 'filled');
     hold on;
-    scatter3(x(gruppo == 75), y(gruppo == 75), z(gruppo == 75), 50, 'cyan', 'filled');
+    scatter3(x(gruppo == 75), y(gruppo == 75), z(gruppo == 75), 50, 'filled');
     hold off;
     grid on;
     
@@ -152,7 +166,7 @@ else
     legend('0', '25', '50', '75', 'Location','best')
 end
 
-fig_name = strcat('sep_task', num2str(task));
+fig_name = strcat('image/sep_task', num2str(task), type);
 saveas(gcf, strcat(fig_name, '.png'));
 
 
