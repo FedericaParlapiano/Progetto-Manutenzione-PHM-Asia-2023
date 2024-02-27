@@ -5,20 +5,19 @@ fs = 0.001;
 t = 0:fs:1.2;
 f = 1;
 v1 = sin(2*pi*f*t);
-v3 = 3*sin(2*pi*3*f*t);
-v5 = 2*sin(2*pi*5*f*t);
-
+v3 = 2 * sin(2*pi*3*f*t);
+% v5 = 2*sin(2*pi*5*f*t);
 
 noiseSignal = labeledData;
 
 for i=1:10
-    noiseSignal.Case{i,1}.P1 = (noiseSignal.Case{i,1}.P1' + v1+v5+v3)';
-    noiseSignal.Case{i,1}.P2 = (noiseSignal.Case{i,1}.P2' + v1+v5+v3)';
-    noiseSignal.Case{i,1}.P3 = (noiseSignal.Case{i,1}.P3' + v1+v5+v3)';
-    noiseSignal.Case{i,1}.P4 = (noiseSignal.Case{i,1}.P4' + v1+v5+v3)';
-    noiseSignal.Case{i,1}.P5 = (noiseSignal.Case{i,1}.P5' + v1+v5+v3)';
-    noiseSignal.Case{i,1}.P6 = (noiseSignal.Case{i,1}.P6' + v1+v5+v3)';
-    noiseSignal.Case{i,1}.P7 = (noiseSignal.Case{i,1}.P7' + v1+v5+v3)';
+    noiseSignal.Case{i,1}.P1 = (noiseSignal.Case{i,1}.P1' + v1 + v3)';
+    noiseSignal.Case{i,1}.P2 = (noiseSignal.Case{i,1}.P2' + v1 + v3)';
+    noiseSignal.Case{i,1}.P3 = (noiseSignal.Case{i,1}.P3' + v1 + v3)';
+    noiseSignal.Case{i,1}.P4 = (noiseSignal.Case{i,1}.P4' + v1 + v3)';
+    noiseSignal.Case{i,1}.P5 = (noiseSignal.Case{i,1}.P5' + v1 + v3)';
+    noiseSignal.Case{i,1}.P6 = (noiseSignal.Case{i,1}.P6' + v1 + v3)';
+    noiseSignal.Case{i,1}.P7 = (noiseSignal.Case{i,1}.P7' + v1 + v3)';
 end
 
 noiseSignal = head(noiseSignal,10);
@@ -29,11 +28,12 @@ plot(t,labeledData.Case{i,1}.P1);
 hold on
 plot(t,noiseSignal.Case{i,1}.P1);
 hold on
-plot(t,v1+v3+v5);
+plot(t, v1 + v3);
 
 
 
 [FeatureTable, x] = generate_function_task2_unknown(noiseSignal);
+testTable = FeatureTable;
 
 % dataFolder = 'dataset/train/data/';
 % files = dir(fullfile(dataFolder, '*.csv'));
