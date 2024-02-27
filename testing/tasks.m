@@ -337,14 +337,6 @@ legend('predicted', 'true')
 title(['Scatter plot Task 5']);
 subtitle(['RMSE: ', num2str(RMSE_median)])
 
-% [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
-% 
-%     for i = 1:numWindow:len-numWindow+1
-%         countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
-%         countOfThree = numWindow-countOfTwo;
-%         if countOfTwo>=dueterzi
-%             prediction = [prediction, 2];
-%         else
-%             prediction = [prediction, 3];
-%         end
-%     end
+
+[score]  = calculate_score(answers, prediction1, task2Prediction, task3Prediction, task4Prediction, task5Predictionr);
+disp(['Score finale: ', num2str(score,'%.2f'),'%']);
