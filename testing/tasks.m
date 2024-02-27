@@ -27,7 +27,7 @@ answers = 'answer.csv';
 answers = readtable(answers, 'VariableNamingRule', 'preserve');
 
 
-% task 1
+%% task 1
 [testDataTask1] = task1(testPath, "");
 [testFeatureTable1, x] = generate_function_task1(testDataTask1);
 
@@ -64,7 +64,7 @@ confronti = (prediction1(:,2)==task1Actual');
 plot_data(testFeatureTable1, confronti, 1, 'actual');
 
 
-% task 2, unknown data
+%% task 2, unknown data
 idx = prediction1(:,2)==1;
 testDataTask2 = [testDataTask1(prediction1(:,2)==1,:) table(prediction1(idx,1))];
 
@@ -91,7 +91,7 @@ confronti = (task2ActualUnknown.Task2==prediction2Unknown.Var1);
 plot_data(testFeatureTable2Unknown, confronti, 'unknown', 'actual');
 
 
-% task 2, bubble, valve
+%% task 2, bubble, valve
 idx = table2array(prediction2Unknown(:,2))==0;
 testDataTask2 = [testDataTask2(idx,1) prediction2Unknown(idx,1)];
 [testFeatureTable2] = generate_function_task2(testDataTask2(:,1));
@@ -150,7 +150,7 @@ plot_data(testFeatureTable2, confronti, 2, 'actual');
 
 
 
-% task 3, bubble
+%% task 3, bubble
 testDataTask3 = testDataTask2(prediction2.Var1 == 2, :);
 [testFeatureTable3] = generate_function_task3(testDataTask3(:,1));
 [count3, prediction3] = testing_unlabeled_data(10, testFeatureTable3, trainedModel3, false);
@@ -198,7 +198,7 @@ actual3 = array2table(table3);
 confronti = (actual3.table31==actual3.table32);
 plot_data(testFeatureTable3,  confronti, 3, 'actual');
 
-% task 4, valve
+%% task 4, valve
 testDataTask45 = testDataTask2(prediction2.Var1 == 3, :);
 [testFeatureTable4] = generate_function_task4(testDataTask45);
 [count4, prediction4] = testing_unlabeled_data(5, testFeatureTable4, trainedModel4, false);
@@ -240,7 +240,7 @@ confronti = (actual4.table41==actual4.table42);
 plot_data(testFeatureTable4,  confronti, 4, 'actual');
 
 
-% task 5, valve opening ratio
+%% task 5, valve opening ratio classification
 [testFeatureTable5] = generate_function_task5(testDataTask45(:,1));
 [count5, prediction5] = testing_unlabeled_data(10, testFeatureTable5, trainedModel5, false);
 prediction5 = [testDataTask45(:,2) table(prediction5')];
@@ -295,8 +295,7 @@ confronti = (actual5.table51==actual5.table52);
 plot_data(testFeatureTable5, confronti, 5,'actual');
 
 
-
-% task 5, valve opening ratio
+%% task 5, valve opening ratio regression
 [testFeatureTable5r] = generate_function_task5_regressione13feature(testDataTask45(:,1));
 [count5r, prediction5r] = testing_unlabeled_data(10, testFeatureTable5r, trainedModel5regression13feature, true);
 prediction5r = [testDataTask45(:,2) table(prediction5r')];
@@ -325,6 +324,10 @@ RMSE_median = rmse(answers.task5(locTable1), prediction5r.Var1(locTable2));
 % disp(['RMSE_mean: ', num2str(RMSE_mean)]);
 disp(['RMSE_median: ', num2str(RMSE_median)]);
 
+error = answers.task5(locTable1) - prediction5r.Var1(locTable2);
+MAE = mae(error);
+disp(['MAE: ', num2str(MAE)]);
+
 figure;
 samples = [1:length(prediction5r.Var1(locTable2))];
 scatter(samples, prediction5r.Var1(locTable2), 50, 'red','filled');
@@ -337,6 +340,7 @@ legend('predicted', 'true')
 title(['Scatter plot Task 5']);
 subtitle(['RMSE: ', num2str(RMSE_median)])
 
+%% final score
 
 [score]  = calculate_score(answers, prediction1, task2Prediction, task3Prediction, task4Prediction, task5Predictionr);
 disp(['Score finale: ', num2str(score,'%.2f'),'%']);
