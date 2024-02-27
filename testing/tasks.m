@@ -338,7 +338,7 @@ xlabel('sample')
 ylabel('opening ratio')
 legend('predicted', 'true')
 title(['Scatter plot Task 5']);
-subtitle(['RMSE: ', num2str(RMSE_median)])
+subtitle(['RMSE: ', num2str(RMSE_median), newline, 'MAE: ', num2str(MAE)])
 
 %% final score
 
