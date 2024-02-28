@@ -1,4 +1,4 @@
-import one_class_classification_chiara.*
+import one_class_classification.*
 % num windows frame policy 0.064s
 numWindow = 4;
 % num windows frame policy 0.128s
@@ -54,8 +54,8 @@ if ismember('Task1', feature.Properties.VariableNames)
     confusionchart(C, classLabels)
 
 elseif ismember('Task2', feature.Properties.VariableNames)
-    [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, numWindow, maggioranza)
-    
+    [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification(trainTable, testTable, numWindow, maggioranza)
+ 
     [yfit,scores]=trainedModel1.predictFcn(notUnknownMembers);
 
     for i = 1:numWindow:len-numWindow+1

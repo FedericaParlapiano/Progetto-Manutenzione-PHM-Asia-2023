@@ -1,4 +1,4 @@
-function [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification_chiara(trainTable, testTable, numWindow, maggioranza)
+function [notUnknownMembers, unknownMembers, indexToRemove] = one_class_classification(trainTable, testTable, numWindow, maggioranza)
     
     if ismember('Task2', trainTable.Properties.VariableNames)
         trainTable = removevars(trainTable,["Task2"]);
