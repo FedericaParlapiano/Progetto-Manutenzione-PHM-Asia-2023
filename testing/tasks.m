@@ -1,5 +1,8 @@
-addpath('feature\');
-addpath('evaluation\');
+clc;
+clear all:
+
+addpath('feature/');
+addpath('evaluation/');
 
 
 import testing_unlabeled_data.*
@@ -11,7 +14,8 @@ import generate_function_task4.*
 import generate_function_task5.*
 import plot_data.*
 import calculate_accuracy.*
-import task1.*
+import import_train.*
+import submission.*
 
 load('classificatori/trainedModel1.mat')
 load('classificatori/unknown.mat')
@@ -30,7 +34,7 @@ answers = readtable(answers, 'VariableNamingRule', 'preserve');
 
 
 %% task 1, normal & abnormal data
-[testDataTask1] = task1(testPath, "");
+[testDataTask1] = import_train(testPath, "");
 [testFeatureTable1, x] = generate_function_task1(testDataTask1);
 
 [count1, prediction1] = testing_unlabeled_data(10, testFeatureTable1, trainedModel1, false);
@@ -343,6 +347,6 @@ title(['Scatter plot Task 5']);
 subtitle(['RMSE: ', num2str(RMSE_median), newline, 'MAE: ', num2str(MAE)])
 
 %% final score
-
+submission(prediction1(:,2), task2Prediction(:,2), task3Prediction(:,2), task4Prediction(:,2), task5Predictionr(:,2));
 [score]  = calculate_score(answers, prediction1, task2Prediction, task3Prediction, task4Prediction, task5Predictionr);
 disp(['Score finale: ', num2str(score,'%.2f'),'%']);
