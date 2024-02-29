@@ -12,7 +12,7 @@ To run our program and see the tests results, you just nell to run the [tasks.m]
 The files contained in the main directory of the repository can be run to check the results obtained during training. 
 
 ### Documentation
-In this section you can find the documentation of our project: [Documentation]()
+In this section you can find the documentation of our project: [Documentation]().
 
 ### Contributors
 | Contributor name | Contacts |
