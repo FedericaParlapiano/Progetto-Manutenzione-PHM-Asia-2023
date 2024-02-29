@@ -51,13 +51,13 @@ import one_class_classification.*
         classes = dictionary(names,wheels);
  
     elseif ismember('Task2', testTable.Properties.VariableNames)
-        dueterzi = 8;
+        maggioranza = 5;
         [yfit,scores]=trainedModel.predictFcn(testTable);
 
         for i = 1:numWindow:len-numWindow+1
             countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
             countOfThree = numWindow-countOfTwo;
-            if countOfTwo>=dueterzi
+            if countOfTwo>=maggioranza
                 prediction = [prediction, 2];
             else
                 prediction = [prediction, 3];

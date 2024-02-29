@@ -61,7 +61,7 @@ elseif ismember('Task2', feature.Properties.VariableNames)
     for i = 1:numWindow:len-numWindow+1
         countOfTwo = sum(yfit(i:i+numWindow-1) == 2);
         countOfThree = numWindow-countOfTwo;
-        if countOfTwo>=dueterzi
+        if countOfTwo>=maggioranza
             prediction = [prediction, 2];
         else
             prediction = [prediction, 3];
