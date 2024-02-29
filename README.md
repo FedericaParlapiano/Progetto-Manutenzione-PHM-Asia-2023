@@ -8,8 +8,8 @@ To tools required to run our code with [Matlab](https://it.mathworks.com/product
 
 #### Running our program
 
-To run our program and see the tests results, you just nell to run the [tasks.m](https://github.com/FedericaParlapiano/Progetto-Manutenzione-PHM-Asia-2023/blob/main/testing/tasks.m) file inside the testing directory.
-Ther files contained in the main directory of the repository can be run to check the results obtained during training. 
+To run our program and see the tests results, you just nell to run the [tasks.m](https://github.com/FedericaParlapiano/Progetto-Manutenzione-PHM-Asia-2023/blob/main/testing/tasks.m) file inside the testing directory.\
+The files contained in the main directory of the repository can be run to check the results obtained during training. 
 
 ### Documentation
 In this section you can find the documentation of our project: [Documentation]()
