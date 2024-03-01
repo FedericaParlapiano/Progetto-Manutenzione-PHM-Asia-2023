@@ -4,8 +4,8 @@ numWindow = 4;
 % num windows frame policy 0.128s
 % numWindow = 10;
 
-maggioranza = int32(numWindow/2);
-dueterzi = int32(numWindow*2/3);
+maggioranza = int32(numWindow/2)+1;
+dueterzi = int32(numWindow*2/3)+1;
 
 feature = FeatureTableTrain;
 testTable = FeatureTableTest;
@@ -91,28 +91,10 @@ elseif ismember('Task3', feature.Properties.VariableNames)
         countOfSix = sum(yfit(i:i+numWindow-1) == 6);
         countOfSeven = sum(yfit(i:i+numWindow-1) == 7);
         countOfEight = sum(yfit(i:i+numWindow-1) == 8);
-        if countOfOnes>=maggioranza
-            prediction = [prediction, 1];
-        elseif countOfTwos>=maggioranza
-            prediction = [prediction, 2];
-        elseif countOfThree>=maggioranza
-            prediction = [prediction, 3];
-        elseif countOfFour>=maggioranza
-            prediction = [prediction, 4];
-        elseif countOfFive>=maggioranza
-            prediction = [prediction, 5];
-        elseif countOfSix>=maggioranza
-            prediction = [prediction, 6];
-        elseif countOfSeven>=maggioranza
-            prediction = [prediction, 7];
-        elseif countOfEight>=maggioranza
-            prediction = [prediction, 8];
-        else
-            count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
-            [M, I] = max(count);
-            prediction = [prediction, I];
+        count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
+        [M, I] = max(count);
+        prediction = [prediction, I];
 
-        end
     end
 
     correctPredictions = label_array == prediction;
@@ -134,20 +116,10 @@ elseif ismember('Task4', feature.Properties.VariableNames)
         countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
         countOfThree = sum(yfit(i:i+numWindow-1) == 3);
         countOfFour = sum(yfit(i:i+numWindow-1) == 4);
-        if countOfOnes>=dueterzi
-            prediction = [prediction, 1];
-        elseif countOfTwos>=dueterzi
-            prediction = [prediction, 2];
-        elseif countOfThree>=dueterzi
-            prediction = [prediction, 3];
-        elseif countOfFour>=dueterzi
-            prediction = [prediction, 4];
-        else
-            count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
-            [M, I] = max(count);
-            prediction = [prediction, I];
+        count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
+        [M, I] = max(count);
+        prediction = [prediction, I];
 
-        end
     end
 
     correctPredictions = label_array == prediction;
@@ -169,20 +141,9 @@ elseif ismember('Task5classification', feature.Properties.VariableNames)
         countOfTwos = sum(yfit(i:i+numWindow-1) == 25);
         countOfThree = sum(yfit(i:i+numWindow-1) == 50);
         countOfFour = sum(yfit(i:i+numWindow-1) == 75);
-        if countOfOnes>=dueterzi
-            prediction = [prediction, 0];
-        elseif countOfTwos>=dueterzi
-            prediction = [prediction, 25];
-        elseif countOfThree>=dueterzi
-            prediction = [prediction, 50];
-        elseif countOfFour>=dueterzi
-            prediction = [prediction, 75];
-        else
-            count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
-            [M, I] = max(count);
-            prediction = [prediction, (I-1)*25];
-
-        end
+        count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
+        [M, I] = max(count);
+        prediction = [prediction, (I-1)*25];
     end
 
     correctPredictions = label_array == prediction;

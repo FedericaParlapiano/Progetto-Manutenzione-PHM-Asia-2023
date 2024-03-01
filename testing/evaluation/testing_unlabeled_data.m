@@ -2,10 +2,6 @@ function [classes, prediction] = testing_unlabeled_data(numWindow, testTable, tr
 
 import one_class_classification.*
 
-    
-    maggioranza = int32(numWindow/2);
-    dueterzi = int32(numWindow*2/3)+1;
-
     if class(trainedModel) ~= "OneClassSVM"
         if regressione==false
             [yfit,scores]=trainedModel.predictFcn(testTable);
@@ -20,7 +16,7 @@ import one_class_classification.*
     end
 
     if ismember('Task1', testTable.Properties.VariableNames)
-        dueterzi = 8;
+        dueterzi = int32(numWindow*2/3)+1;
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfZeros = numWindow-countOfOnes;
@@ -51,7 +47,7 @@ import one_class_classification.*
         classes = dictionary(names,wheels);
  
     elseif ismember('Task2', testTable.Properties.VariableNames)
-        maggioranza = 5;
+        maggioranza = int32(numWindow/2)+1;
         [yfit,scores]=trainedModel.predictFcn(testTable);
 
         for i = 1:numWindow:len-numWindow+1
@@ -69,7 +65,6 @@ import one_class_classification.*
         classes = dictionary(names,wheels);
     
     elseif ismember('Task3', testTable.Properties.VariableNames)
-        dueterzi = 8;
         for i = 1:numWindow:len-numWindow+1
             countOfOnes = sum(yfit(i:i+numWindow-1) == 1);
             countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
@@ -79,28 +74,11 @@ import one_class_classification.*
             countOfSix = sum(yfit(i:i+numWindow-1) == 6);
             countOfSeven = sum(yfit(i:i+numWindow-1) == 7);
             countOfEight = sum(yfit(i:i+numWindow-1) == 8);
-            if countOfOnes>=dueterzi
-                prediction = [prediction, 1];
-            elseif countOfTwos>=dueterzi
-                prediction = [prediction, 2];
-            elseif countOfThree>=dueterzi
-                prediction = [prediction, 3];
-            elseif countOfFour>=dueterzi
-                prediction = [prediction, 4];
-            elseif countOfFive>=dueterzi
-                prediction = [prediction, 5];
-            elseif countOfSix>=dueterzi
-                prediction = [prediction, 6];
-            elseif countOfSeven>=dueterzi
-                prediction = [prediction, 7];
-            elseif countOfEight>=dueterzi
-                prediction = [prediction, 8];
-            else
-                count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
-                [M, I] = max(count);
-                prediction = [prediction, I];
+        
+            count = [countOfOnes; countOfTwos; countOfThree; countOfFour; countOfFive; countOfSix; countOfSeven; countOfEight];
+            [M, I] = max(count);
+            prediction = [prediction, I];
     
-            end
         end
         classes = [];
     
@@ -110,19 +88,9 @@ import one_class_classification.*
             countOfTwos = sum(yfit(i:i+numWindow-1) == 2);
             countOfThree = sum(yfit(i:i+numWindow-1) == 3);
             countOfFour = sum(yfit(i:i+numWindow-1) == 4);
-            if countOfOnes>=dueterzi
-                prediction = [prediction, 1];
-            elseif countOfTwos>=dueterzi
-                prediction = [prediction, 2];
-            elseif countOfThree>=dueterzi
-                prediction = [prediction, 3];
-            elseif countOfFour>=dueterzi
-                prediction = [prediction, 4];
-            else
-                count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
-                [M, I] = max(count);
-                prediction = [prediction, I];
-            end
+            count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
+            [M, I] = max(count);
+            prediction = [prediction, I];
         end
         classes = [];
 
@@ -134,19 +102,10 @@ import one_class_classification.*
                 countOfTwos = sum(yfit(i:i+numWindow-1) == 25);
                 countOfThree = sum(yfit(i:i+numWindow-1) == 50);
                 countOfFour = sum(yfit(i:i+numWindow-1) == 75);
-                if countOfOnes>=dueterzi
-                    prediction = [prediction, 0];
-                elseif countOfTwos>=dueterzi
-                    prediction = [prediction, 25];
-                elseif countOfThree>=dueterzi
-                    prediction = [prediction, 50];
-                elseif countOfFour>=dueterzi
-                    prediction = [prediction, 75];
-                else
-                    count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
-                    [M, I] = max(count);
-                    prediction = [prediction, (I-1)*25];
-                end
+                
+                count = [countOfOnes; countOfTwos; countOfThree; countOfFour];
+                [M, I] = max(count);
+                prediction = [prediction, (I-1)*25];
             end
             classes = [];
         elseif regressione==true
