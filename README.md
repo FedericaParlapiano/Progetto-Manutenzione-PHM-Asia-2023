@@ -5,7 +5,7 @@ This project aims to face the [PHM Asia Pacific 2023 challenge](https://phmap.jp
 The tools required to run our code with [Matlab](https://it.mathworks.com/products/matlab/student.html) are:
 * [Diagnostic Feature Designer](https://it.mathworks.com/help/predmaint/ref/diagnosticfeaturedesigner-app.html) used to extract the signal and time features for the experiments;
 * [Classification Learner App](https://it.mathworks.com/help/stats/classificationlearner-app.html) used to train classification models;
-* [Regression Learner App](https://it.mathworks.com/help/stats/regression-learner-app.html) used to train regression learner;
+* [Regression Learner App](https://it.mathworks.com/help/stats/regression-learner-app.html) used to train regression models;
 * [Deep Learning Toolbox](https://it.mathworks.com/products/deep-learning.html) used to calculate some accuracy metrics.
 
 #### Running our program
