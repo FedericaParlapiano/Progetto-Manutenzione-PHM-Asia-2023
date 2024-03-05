@@ -14,7 +14,7 @@ To run our program and see the tests results, you just need to run the [tasks.m]
 The files contained in the main directory of the repository can be run to check the results obtained during training. 
 
 ### Documentation
-To know more about our work, check the [Documentation]().
+To know more about our work, check the [Documentation](https://github.com/FedericaParlapiano/Progetto-Manutenzione-PHM-Asia-2023/blob/main/Progetto_Manutenzione___PHM_Asia_Pacific.pdf).
 
 ### Contributors
 | Contributor name | Contacts |
