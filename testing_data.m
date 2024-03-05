@@ -1,21 +1,22 @@
 import one_class_classification.*
 % num windows frame policy 0.064s
-numWindow = 4;
+numWindow = 10;
 % num windows frame policy 0.128s
 % numWindow = 10;
 
 maggioranza = int32(numWindow/2)+1;
 dueterzi = int32(numWindow*2/3)+1;
 
-feature = FeatureTableTrain;
-testTable = FeatureTableTest;
-trainTable = FeatureTableTrain;
+feature = trainTable;
+testTable = testTable;
+% trainTable = FeatureTableTrain;
 
 
 % [yfit,scores]=trainedModel1.predictFcn(testTable);
-len = 100;
+yfit=trainedModel1.predictFcn(testTable);
+len = length(yfit);
 
-labels = testTable.Task2;
+labels = testTable.Task5;
 %labels = testTable.Task3;
 %labels = testTable.Task5;
 %labels = testTable.Task4;
@@ -177,6 +178,10 @@ elseif ismember('Task5', feature.Properties.VariableNames)
 
     % disp(['RMSE_mean: ', num2str(RMSE_mean)]);
     disp(['RMSE_median: ', num2str(RMSE_median)]);
+    
+    error = prediction-label_array;
+    MAE = mae(error);
+    disp(['MAE: ', num2str(MAE)]);
 
     samples = [1:length(prediction)];
     scatter(samples, prediction, 50, 'red','filled');
@@ -186,4 +191,7 @@ elseif ismember('Task5', feature.Properties.VariableNames)
     xlabel('sample')
     ylabel('opening ratio')
     legend('predicted', 'true')
+    xlabel('sample')
+    title(['Scatter plot']);
+    subtitle(['RMSE: ', num2str(RMSE_median), newline, 'MAE: ', num2str(MAE)])
 end
